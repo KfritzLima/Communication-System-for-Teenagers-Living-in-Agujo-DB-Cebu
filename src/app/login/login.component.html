@@ -1,0 +1,32 @@
+<div class="container">
+  <form (ngSubmit)="onSubmit()">
+    <div class="greeting">HELLO!</div>
+    
+    <!-- Email Input -->
+    <div class="custom-input-group">
+      <i class="icon fas fa-envelope"></i>
+      <input 
+        type="email" 
+        placeholder="Email" 
+        [(ngModel)]="email" 
+        name="email" 
+        required
+      />
+    </div>
+
+    <!-- Password Input -->
+    <div class="custom-input-group">
+      <i class="icon fas fa-lock"></i>
+      <input 
+        type="password" 
+        placeholder="Password" 
+        [(ngModel)]="password" 
+        name="password" 
+        required
+      />
+    </div>
+
+    <button class="login-btn" type="submit">Login</button>
+    <button class="create-btn" routerLink="/create-account" type="button">Create Account</button>
+  </form>
+</div>
