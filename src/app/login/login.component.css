@@ -1,7 +1,15 @@
+/* Styles (e.g., login.component.css) */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body, html {
   height: 100%;
   margin: 0;
   font-family: 'Poppins', sans-serif;
+  overflow: hidden;
 }
 
 .container {
@@ -9,12 +17,12 @@ body, html {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(135deg, #9595e9, #764ba2);
-  padding: 20px;
+  background: #344256; /* Solid background */
 }
 
+
 form {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(118, 75, 162, 0.4); /* dark purple transparency */
   border-radius: 16px;
   padding: 40px 30px;
   backdrop-filter: blur(10px);
@@ -22,6 +30,7 @@ form {
   width: 100%;
   max-width: 340px;
   text-align: center;
+  backdrop-filter: none; /* removed blur */
 }
 
 .greeting {
@@ -40,7 +49,7 @@ form {
 .custom-input-group input {
   width: 80%;
   height: 40px;
-  padding: 14px 14px 14px 50px; /* Added padding for icon */
+  padding: 14px 14px 14px 50px; /* space for icon */
   font-size: 16px;
   border: none;
   border-radius: 8px;
@@ -59,7 +68,7 @@ form {
   top: 50%;
   left: 15px;
   transform: translateY(-50%);
-  font-size: 20px; /* Slightly smaller than before */
+  font-size: 20px;
   color: rgba(255, 255, 255, 0.8);
 }
 
@@ -76,7 +85,7 @@ form {
 }
 
 .login-btn {
-  background: linear-gradient(90deg, #667eea, #764ba2);
+  background: linear-gradient(90deg, #344256, #344256);
   color: #fff;
   border: none;
   transition: 0.3s ease;
@@ -96,4 +105,7 @@ form {
 
 .create-btn:hover {
   background: rgba(255, 255, 255, 0.2);
+}
+.purple-text {
+  color: #a060ff; /* Or your preferred purple */
 }

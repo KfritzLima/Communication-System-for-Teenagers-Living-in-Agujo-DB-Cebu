@@ -1,7 +1,14 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body, html {
   height: 100%;
   margin: 0;
   font-family: 'Poppins', sans-serif;
+  overflow: hidden;
 }
 
 .container {
@@ -9,11 +16,12 @@ body, html {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: #344256; /* Solid background */
 }
 
+
 form {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(118, 75, 162, 0.4); /* translucent purple */
   border-radius: 16px;
   padding: 40px 30px;
   backdrop-filter: blur(10px);
@@ -38,13 +46,13 @@ form {
 
 .custom-input-group input {
   width: 80%;
-  height: 50px; /* Increased height */
-  padding: 0 12px 0 50px; /* Adjusted padding for icon */
+  height: 50px;
+  padding: 0 12px 0 50px;
   border: none;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.15);
   color: #fff;
-  font-size: 18px; /* Increased font size */
+  font-size: 18px;
   outline: none;
   font-family: 'Poppins', sans-serif;
 }
@@ -62,31 +70,31 @@ form {
   color: rgba(255, 255, 255, 0.8);
 }
 
-.login-btn {
+.login-btn, .create-btn {
   width: 100%;
-  padding: 12px;
+  padding: 14px;
   margin-top: 20px;
   border-radius: 8px;
   background: linear-gradient(90deg, #667eea, #764ba2);
   color: #fff;
   font-weight: bold;
   text-transform: uppercase;
-  border: none;
-  transition: 0.3s ease;
+  font-size: 16px;
   cursor: pointer;
   font-family: 'Poppins', sans-serif;
 }
 
-.create-btn {
-  width: 100%;
-  padding: 12px;
-  margin-top: 15px;
-  border-radius: 8px;
-  border: 2px solid #fff;
+.login-btn {
+  background: linear-gradient(90deg, #344256,#344256);
   color: #fff;
-  font-weight: bold;
-  text-transform: uppercase;
+  border: none;
+  transition: 0.3s ease;
+}
+
+.create-btn {
   background: transparent;
+  color: #fff;
+  border: 2px solid #fff;
   transition: 0.3s ease;
   cursor: pointer;
   font-family: 'Poppins', sans-serif;

@@ -4,17 +4,29 @@
 
     <div class="custom-input-group">
       <span class="material-icons icon">email</span>
-      <input matInput type="email" [(ngModel)]="email" name="email" required placeholder="Email Address" />
+      <input
+        type="email"
+        [(ngModel)]="email"
+        name="email"
+        required
+        placeholder="Email Address"
+      />
     </div>
 
-    <div class="custom-input-group" style="margin-top: 20px;">
+    <div class="custom-input-group">
       <span class="material-icons icon">lock</span>
-      <input matInput type="password" [(ngModel)]="password" name="password" required placeholder="Password" />
+      <input
+        type="password"
+        [(ngModel)]="password"
+        name="password"
+        required
+        placeholder="Password"
+      />
     </div>
 
-    <button mat-raised-button color="primary" type="submit" class="login-btn">Create Account</button>
+    <button type="submit" class="login-btn">Create Account</button>
 
-    <button mat-stroked-button color="accent" [routerLink]="['/login']" type="button" class="create-btn">
+    <button type="button" class="create-btn" [routerLink]="['/login']">
       Already have an account
     </button>
   </form>
