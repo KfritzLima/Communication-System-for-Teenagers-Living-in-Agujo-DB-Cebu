@@ -1,4 +1,43 @@
 <div class="dashboard-container">
   <h1>Welcome to AGUJO FORUM!</h1>
-  <button mat-raised-button color="warn" (click)="logout()" class="logout-button">Logout</button>
+  <button class="logout-button" (click)="logout()">Logout</button>
+
+  <div class="dashboard-grid">
+
+    <!-- Updates Section -->
+    <div class="dashboard-card">
+      <h2>Latest Updates</h2>
+      <ul class="item-list">
+        <li *ngFor="let update of updates">
+          <p class="item-title">{{ update.title }}</p>
+          <small>{{ update.timestamp | date:'short' }}</small>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Events Section -->
+    <div class="dashboard-card">
+      <h2>Upcoming Events</h2>
+      <ul class="item-list">
+        <li *ngFor="let event of events">
+          <p class="item-title"><strong>{{ event.name }}</strong> - {{ event.date | date }}</p>
+          <p>{{ event.location }}</p>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Community News Section -->
+    <div class="dashboard-card">
+      <h2>Community News</h2>
+      <div class="accordion" *ngFor="let news of communityNews">
+        <button class="accordion-toggle" (click)="news.open = !news.open">
+          {{ news.headline }}
+        </button>
+        <div class="accordion-content" *ngIf="news.open">
+          <p>{{ news.details }}</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </div>
