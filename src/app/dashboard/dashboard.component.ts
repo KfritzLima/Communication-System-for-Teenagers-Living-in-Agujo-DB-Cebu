@@ -1,30 +1,19 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatListModule } from '@angular/material/list';
-import { MatExpansionModule } from '@angular/material/expansion';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [
-    FormsModule,
-    MatButtonModule,
-    MatCardModule,
-    MatListModule,
-    MatExpansionModule
-  ],
+  imports: [CommonModule, FormsModule],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent {
-  // Forum post functionality
   newPost: string = '';
   posts: { content: string; timestamp: Date }[] = [];
 
-  // Dashboard content
   updates = [
     { title: 'New forum category added!', timestamp: new Date() },
     { title: 'Maintenance scheduled for Friday.', timestamp: new Date('2025-05-23T09:00:00') }

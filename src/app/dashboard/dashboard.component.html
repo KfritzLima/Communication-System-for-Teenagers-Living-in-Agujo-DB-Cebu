@@ -2,54 +2,52 @@
   <h1>Welcome to AGUJO FORUM!</h1>
   <button class="logout-button" (click)="logout()">Logout</button>
 
-  <!-- Updates Card -->
-  <mat-card class="dashboard-section">
-    <mat-card-title>Latest Updates</mat-card-title>
-    <mat-list>
-      <mat-list-item *ngFor="let update of updates">
-        <div matLine>{{ update.title }}</div>
-        <div matLine class="timestamp">{{ update.timestamp | date: 'medium' }}</div>
-      </mat-list-item>
-    </mat-list>
-  </mat-card>
+  <!-- Updates Section -->
+  <div class="section-box">
+    <h2>Latest Updates</h2>
+    <ul>
+      <li *ngFor="let update of updates">
+        <strong>{{ update.title }}</strong>
+        <br />
+        <small>{{ update.timestamp | date: 'medium' }}</small>
+      </li>
+    </ul>
+  </div>
 
-  <!-- Events Card -->
-  <mat-card class="dashboard-section">
-    <mat-card-title>Upcoming Events</mat-card-title>
-    <mat-list>
-      <mat-list-item *ngFor="let event of events">
-        <div matLine><strong>{{ event.name }}</strong> - {{ event.date | date: 'fullDate' }}</div>
-        <div matLine class="location">{{ event.location }}</div>
-      </mat-list-item>
-    </mat-list>
-  </mat-card>
+  <!-- Events Section -->
+  <div class="section-box">
+    <h2>Upcoming Events</h2>
+    <ul>
+      <li *ngFor="let event of events">
+        <strong>{{ event.name }}</strong> - {{ event.date | date: 'fullDate' }}  
+        <br />
+        <small>{{ event.location }}</small>
+      </li>
+    </ul>
+  </div>
 
-  <!-- Community News Card -->
-  <mat-card class="dashboard-section">
-    <mat-card-title>Community News</mat-card-title>
-    <mat-accordion>
-      <mat-expansion-panel *ngFor="let news of communityNews">
-        <mat-expansion-panel-header>
-          <mat-panel-title>{{ news.headline }}</mat-panel-title>
-        </mat-expansion-panel-header>
-        <p>{{ news.details }}</p>
-      </mat-expansion-panel>
-    </mat-accordion>
-  </mat-card>
+  <!-- Community News Section -->
+  <div class="section-box">
+    <h2>Community News</h2>
+    <div *ngFor="let news of communityNews" class="news-item">
+      <p><strong>{{ news.headline }}</strong></p>
+      <p>{{ news.details }}</p>
+    </div>
+  </div>
 
   <!-- Post Form -->
-  <mat-card class="dashboard-section post-form">
-    <mat-card-title>What's on your mind?</mat-card-title>
-    <textarea [(ngModel)]="newPost" placeholder="Write something..." rows="4"></textarea>
+  <div class="section-box">
+    <h2>Create a Post</h2>
+    <textarea [(ngModel)]="newPost" placeholder="What's on your mind?" rows="4"></textarea>
     <button class="submit-post-button" (click)="submitPost()">Post</button>
-  </mat-card>
+  </div>
 
   <!-- Newsfeed -->
-  <mat-card class="dashboard-section news-feed">
-    <mat-card-title>Newsfeed</mat-card-title>
-    <div class="post" *ngFor="let post of posts | slice:0:10">
-      <p class="post-text">{{ post.content }}</p>
-      <p class="post-time">{{ post.timestamp | date: 'short' }}</p>
+  <div class="section-box">
+    <h2>Newsfeed</h2>
+    <div *ngFor="let post of posts" class="post-item">
+      <p>{{ post.content }}</p>
+      <small>{{ post.timestamp | date: 'short' }}</small>
     </div>
-  </mat-card>
+  </div>
 </div>
