@@ -1,77 +1,112 @@
 .dashboard-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  background: linear-gradient(135deg, #89f7fe, #66a6ff);
-  min-height: 100vh;
-  font-family: 'Poppins', sans-serif;
-  position: relative;
+  max-width: 600px;
+  margin: 40px auto;
+  font-family: Arial, sans-serif;
+  color: #333;
 }
 
 h1 {
-  color: white;
-  font-size: 32px;
+  text-align: center;
   margin-bottom: 20px;
 }
 
 .logout-button {
-  position: absolute;
-  top: 20px;
-  right: 20px;
+  background: #ff5f6d;
   background: linear-gradient(135deg, #ff5f6d, #ffc371);
   color: white;
-  padding: 10px 20px;
-  font-size: 16px;
-  border-radius: 10px;
   border: none;
+  border-radius: 12px;
+  padding: 10px 20px;
   cursor: pointer;
+  float: right;
+  margin-bottom: 10px;
 }
 
-.dashboard-section {
-  width: 100%;
-  max-width: 700px;
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
   margin-bottom: 20px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+.dashboard-section h2 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.updates-list,
+.events-list {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.update-item,
+.event-item {
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.timestamp,
+.location {
+  font-size: 0.85em;
+  color: #666;
+}
+
+.news-accordion .news-item {
+  margin-bottom: 10px;
+}
+
+.news-header {
+  width: 100%;
+  background: #f0f0f0;
+  border: none;
+  padding: 10px;
+  text-align: left;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.news-details {
+  padding: 10px;
+  background: #fafafa;
+  border-radius: 8px;
+  margin-top: 5px;
 }
 
 textarea {
   width: 100%;
-  margin-top: 10px;
-  padding: 10px;
-  font-size: 16px;
   border-radius: 8px;
   border: 1px solid #ccc;
+  padding: 10px;
   resize: vertical;
+  font-size: 1em;
 }
 
 .submit-post-button {
   margin-top: 10px;
-  background: linear-gradient(135deg, #56ccf2, #2f80ed);
+  background: #66a6ff;
   color: white;
-  padding: 10px 20px;
-  border-radius: 8px;
   border: none;
+  border-radius: 12px;
+  padding: 10px 25px;
   cursor: pointer;
 }
 
-.submit-post-button:hover {
-  box-shadow: 0 0 10px rgba(47, 128, 237, 0.5);
-}
-
 .news-feed .post {
-  background: #fff;
-  padding: 15px;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  margin-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+  padding: 12px 0;
 }
 
 .post-text {
-  font-size: 16px;
-  margin: 0 0 5px 0;
+  margin: 0 0 6px 0;
 }
 
 .post-time {
-  font-size: 12px;
-  color: #666;
+  font-size: 0.8em;
+  color: #999;
 }
