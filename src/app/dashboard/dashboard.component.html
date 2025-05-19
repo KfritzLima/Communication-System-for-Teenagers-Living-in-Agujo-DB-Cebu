@@ -2,42 +2,54 @@
   <h1>Welcome to AGUJO FORUM!</h1>
   <button class="logout-button" (click)="logout()">Logout</button>
 
-  <div class="dashboard-grid">
+  <!-- Updates Card -->
+  <mat-card class="dashboard-section">
+    <mat-card-title>Latest Updates</mat-card-title>
+    <mat-list>
+      <mat-list-item *ngFor="let update of updates">
+        <div matLine>{{ update.title }}</div>
+        <div matLine class="timestamp">{{ update.timestamp | date: 'medium' }}</div>
+      </mat-list-item>
+    </mat-list>
+  </mat-card>
 
-    <!-- Updates Section -->
-    <div class="dashboard-card">
-      <h2>Latest Updates</h2>
-      <ul class="item-list">
-        <li *ngFor="let update of updates">
-          <p class="item-title">{{ update.title }}</p>
-          <small>{{ update.timestamp | date:'short' }}</small>
-        </li>
-      </ul>
+  <!-- Events Card -->
+  <mat-card class="dashboard-section">
+    <mat-card-title>Upcoming Events</mat-card-title>
+    <mat-list>
+      <mat-list-item *ngFor="let event of events">
+        <div matLine><strong>{{ event.name }}</strong> - {{ event.date | date: 'fullDate' }}</div>
+        <div matLine class="location">{{ event.location }}</div>
+      </mat-list-item>
+    </mat-list>
+  </mat-card>
+
+  <!-- Community News Card -->
+  <mat-card class="dashboard-section">
+    <mat-card-title>Community News</mat-card-title>
+    <mat-accordion>
+      <mat-expansion-panel *ngFor="let news of communityNews">
+        <mat-expansion-panel-header>
+          <mat-panel-title>{{ news.headline }}</mat-panel-title>
+        </mat-expansion-panel-header>
+        <p>{{ news.details }}</p>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </mat-card>
+
+  <!-- Post Form -->
+  <mat-card class="dashboard-section post-form">
+    <mat-card-title>What's on your mind?</mat-card-title>
+    <textarea [(ngModel)]="newPost" placeholder="Write something..." rows="4"></textarea>
+    <button class="submit-post-button" (click)="submitPost()">Post</button>
+  </mat-card>
+
+  <!-- Newsfeed -->
+  <mat-card class="dashboard-section news-feed">
+    <mat-card-title>Newsfeed</mat-card-title>
+    <div class="post" *ngFor="let post of posts | slice:0:10">
+      <p class="post-text">{{ post.content }}</p>
+      <p class="post-time">{{ post.timestamp | date: 'short' }}</p>
     </div>
-
-    <!-- Events Section -->
-    <div class="dashboard-card">
-      <h2>Upcoming Events</h2>
-      <ul class="item-list">
-        <li *ngFor="let event of events">
-          <p class="item-title"><strong>{{ event.name }}</strong> - {{ event.date | date }}</p>
-          <p>{{ event.location }}</p>
-        </li>
-      </ul>
-    </div>
-
-    <!-- Community News Section -->
-    <div class="dashboard-card">
-      <h2>Community News</h2>
-      <div class="accordion" *ngFor="let news of communityNews">
-        <button class="accordion-toggle" (click)="news.open = !news.open">
-          {{ news.headline }}
-        </button>
-        <div class="accordion-content" *ngIf="news.open">
-          <p>{{ news.details }}</p>
-        </div>
-      </div>
-    </div>
-
-  </div>
+  </mat-card>
 </div>

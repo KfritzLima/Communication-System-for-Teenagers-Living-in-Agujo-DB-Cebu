@@ -1,105 +1,77 @@
 .dashboard-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  height: auto;
-  min-height: 100vh;
-  background: linear-gradient(135deg, #89f7fe, #66a6ff);
-  font-family: 'Poppins', sans-serif;
-  text-align: center;
   padding: 20px;
-  box-sizing: border-box;
+  background: linear-gradient(135deg, #89f7fe, #66a6ff);
+  min-height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  position: relative;
 }
 
 h1 {
-  color: #ffffff;
-  font-size: 36px;
-  font-weight: bold;
-  margin-bottom: 40px;
+  color: white;
+  font-size: 32px;
+  margin-bottom: 20px;
 }
 
 .logout-button {
-  background: linear-gradient(135deg, #ff5f6d, #ffc371);
-  color: white;
-  padding: 12px 30px;
-  font-size: 18px;
-  border-radius: 12px;
-  border: none;
-  cursor: pointer;
-  transition: 0.3s;
   position: absolute;
   top: 20px;
   right: 20px;
-}
-
-.logout-button:hover {
-  box-shadow: 0 0 15px rgba(255, 95, 109, 0.6);
-}
-
-.dashboard-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 20px;
-  width: 100%;
-  max-width: 1200px;
-  margin-top: 20px;
-}
-
-.dashboard-card {
-  background: white;
-  border-radius: 16px;
-  padding: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  text-align: left;
-}
-
-.dashboard-card h2 {
-  margin-top: 0;
-  color: #333;
-  font-size: 22px;
-  margin-bottom: 15px;
-}
-
-.item-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.item-list li {
-  padding: 10px 0;
-  border-bottom: 1px solid #eee;
-}
-
-.item-list li:last-child {
-  border-bottom: none;
-}
-
-.item-title {
-  font-weight: 500;
-  margin: 0;
-}
-
-.accordion-toggle {
-  width: 100%;
-  text-align: left;
-  padding: 10px;
+  background: linear-gradient(135deg, #ff5f6d, #ffc371);
+  color: white;
+  padding: 10px 20px;
   font-size: 16px;
-  background-color: #f0f0f0;
+  border-radius: 10px;
   border: none;
-  border-radius: 8px;
-  margin-bottom: 8px;
   cursor: pointer;
 }
 
-.accordion-toggle:hover {
-  background-color: #e0e0e0;
+.dashboard-section {
+  width: 100%;
+  max-width: 700px;
+  margin-bottom: 20px;
 }
 
-.accordion-content {
+textarea {
+  width: 100%;
+  margin-top: 10px;
   padding: 10px;
-  background-color: #fafafa;
-  border-left: 3px solid #66a6ff;
-  border-radius: 0 0 8px 8px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  resize: vertical;
+}
+
+.submit-post-button {
+  margin-top: 10px;
+  background: linear-gradient(135deg, #56ccf2, #2f80ed);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.submit-post-button:hover {
+  box-shadow: 0 0 10px rgba(47, 128, 237, 0.5);
+}
+
+.news-feed .post {
+  background: #fff;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+}
+
+.post-text {
+  font-size: 16px;
+  margin: 0 0 5px 0;
+}
+
+.post-time {
+  font-size: 12px;
+  color: #666;
 }
