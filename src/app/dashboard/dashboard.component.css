@@ -1,7 +1,9 @@
 .dashboard-container {
-  max-width: 800px;
-  margin: auto;
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
   background: linear-gradient(135deg, #89f7fe, #66a6ff);
   min-height: 100vh;
   font-family: 'Poppins', sans-serif;
@@ -10,20 +12,16 @@
 
 h1 {
   text-align: center;
-  color: #fff;.dashboard-container {
-  max-width: 600px;
-  margin: 40px auto;
-  font-family: Arial, sans-serif;
-  color: #333;
 }
 
 h1 {
-  text-align: center;
-  margin-bottom: 20px;
+  color: #ffffff;
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 40px;
 }
 
 .logout-button {
-  background: #ff5f6d;
   background: linear-gradient(135deg, #ff5f6d, #ffc371);
   color: white;
   border: none;
@@ -123,8 +121,7 @@ textarea {
   color: #999;
 }
 
-  margin-bottom: 20px;
-}
+
 
 .logout-button {
   float: right;
@@ -162,6 +159,7 @@ textarea {
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  transition: 0.3s;
 }
 
 .post-item {
@@ -169,4 +167,71 @@ textarea {
   padding: 15px;
   margin-top: 10px;
   border-radius: 10px;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+  width: 100%;
+  max-width: 1200px;
+  margin-top: 20px;
+}
+
+.dashboard-card {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  text-align: left;
+}
+
+.dashboard-card h2 {
+  margin-top: 0;
+  color: #333;
+  font-size: 22px;
+  margin-bottom: 15px;
+}
+
+.item-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.item-list li {
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.item-list li:last-child {
+  border-bottom: none;
+}
+
+.item-title {
+  font-weight: 500;
+  margin: 0;
+}
+
+.accordion-toggle {
+  width: 100%;
+  text-align: left;
+  padding: 10px;
+  font-size: 16px;
+  background-color: #f0f0f0;
+  border: none;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+.accordion-toggle:hover {
+  background-color: #e0e0e0;
+}
+
+.accordion-content {
+  padding: 10px;
+  background-color: #fafafa;
+  border-left: 3px solid #66a6ff;
+  border-radius: 0 0 8px 8px;
 }
