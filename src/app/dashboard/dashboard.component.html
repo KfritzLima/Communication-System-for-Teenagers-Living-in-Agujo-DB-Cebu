@@ -1,10 +1,38 @@
 <div class="dashboard-container">
-  <h1>Welcome to AGUJO FORUM!</h1>
-  <button class="logout-button" (click)="logout()">Logout</button>
+  <!-- Header -->
+  <div class="dashboard-header" style="position: relative; width: 100%;">
+    <h1 class="forum-title">AGUJOFORUM</h1>
 
+    <div class="user-controls" style="position: absolute; top: 16px; right: 20px; display: flex; align-items: center; gap: 15px;">
+      <!-- Notification Bell -->
+      <button class="notification-bell" (click)="toggleNotifications()">
+        <i class="fas fa-bell"></i>
+      </button>
+
+      <!-- Settings Icon -->
+      <button class="icon-button settings">
+        <i class="fas fa-cog"></i>
+      </button>
+
+      <!-- Logout Button -->
+      <button class="logout-button" (click)="logout()">Logout</button>
+    </div>
+  </div>
+
+  <!-- Notification Panel -->
+  <div *ngIf="showNotifications" class="notification-panel">
+    <h3>Notifications</h3>
+    <ul>
+      <li *ngFor="let notification of notifications">{{ notification.message }}</li>
+    </ul>
+  </div>
+
+  <!-- Welcome Message -->
+  <h2 class="welcome-message">Welcome, {{ userFullName }}</h2>
+
+  <!-- Dashboard Sections -->
   <div class="dashboard-grid">
-
-    <!-- Updates Section -->
+    <!-- Latest Updates -->
     <div class="dashboard-card">
       <h2>Latest Updates</h2>
       <ul class="item-list">
@@ -15,7 +43,7 @@
       </ul>
     </div>
 
-    <!-- Events Section -->
+    <!-- Upcoming Events -->
     <div class="dashboard-card">
       <h2>Upcoming Events</h2>
       <ul class="item-list">
@@ -26,7 +54,7 @@
       </ul>
     </div>
 
-    <!-- Community News Section -->
+    <!-- Community News -->
     <div class="dashboard-card">
       <h2>Community News</h2>
       <div class="accordion" *ngFor="let news of communityNews">
@@ -38,6 +66,67 @@
         </div>
       </div>
     </div>
+  </div>
 
+  <!-- Posts Section -->
+  <div class="dashboard-card" style="margin-top: 40px; max-width: 800px; width: 100%;">
+    <h2>Posts</h2>
+
+    <!-- Create New Post -->
+    <div class="post-card">
+      <input
+        type="text"
+        placeholder="Post title"
+        [(ngModel)]="newPostTitle"
+        style="width: 100%; margin-bottom: 10px; padding: 8px 12px; border-radius: 8px; border: 1px solid #ccc;"
+      />
+      <textarea
+        rows="3"
+        placeholder="Write your post content..."
+        [(ngModel)]="newPostContent"
+        style="width: 100%; padding: 8px 12px; border-radius: 8px; border: 1px solid #ccc; resize: vertical;"
+      ></textarea>
+      <button
+        (click)="addPost()"
+        style="margin-top: 10px; background: #6a11cb; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: 600;"
+      >
+        Add Post
+      </button>
+    </div>
+
+    <!-- List of Posts -->
+    <div *ngFor="let post of posts" class="post-card">
+      <p class="post-title">{{ post.title }}</p>
+      <p class="post-content">{{ post.content }}</p>
+
+      <!-- Comments -->
+      <ul class="comment-list">
+        <li *ngFor="let comment of post.comments">
+          {{ comment }}
+        </li>
+      </ul>
+
+      <!-- Add comment -->
+      <div class="comment-form">
+        <input
+          type="text"
+          placeholder="Add a comment..."
+          [(ngModel)]="post.newComment"
+          class="comment-input"
+          (keydown.enter)="addComment(post)"
+        />
+        <button class="comment-submit-button" (click)="addComment(post)">Comment</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Posts Sidebar -->
+  <div class="recent-posts" style="max-width: 800px; width: 100%;">
+    <h2>Recent Posts</h2>
+    <ul>
+      <li *ngFor="let post of posts" (click)="scrollToPost(post)">
+        {{ post.title }}
+      </li>
+    </ul>
   </div>
 </div>
