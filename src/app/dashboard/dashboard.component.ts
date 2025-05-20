@@ -18,7 +18,8 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent {
-  constructor(private router: Router) {} 
+  constructor(private router: Router) {}
+
   newPost = '';
   notifications = ['Maria commented on your post.', 'System maintenance at 10 PM.'];
 
@@ -60,6 +61,9 @@ export class DashboardComponent {
   }
 
   logout() {
-    alert('Logged out!');
+    // Optionally clear session
+    // localStorage.clear();
+    
+    this.router.navigate(['/login']); // ✅ Navigate to login page
   }
 }
