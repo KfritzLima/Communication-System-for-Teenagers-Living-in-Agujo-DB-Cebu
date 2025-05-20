@@ -1,31 +1,30 @@
 import { Component } from '@angular/core';
-
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   standalone: true,
+  imports: [CommonModule],
   template: `
-    <div *ngIf="!loggedIn">
+    <div *ngIf="!isLoggedIn">
       <h2>Login</h2>
       <button (click)="login()">Log In</button>
     </div>
 
-    <div *ngIf="loggedIn">
-      <h2>Dashboard</h2>
-      <p>Welcome, user!</p>
+    <div *ngIf="isLoggedIn">
+      <h2>Welcome, User!</h2>
       <button (click)="logout()">Log Out</button>
     </div>
   `,
-  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  loggedIn = false;
+  isLoggedIn = false;
 
   login() {
-    this.loggedIn = true;
+    this.isLoggedIn = true;
   }
 
   logout() {
-    this.loggedIn = false;
+    this.isLoggedIn = false;
   }
 }
