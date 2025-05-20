@@ -3,6 +3,28 @@
     <h2 class="greeting">Create Your Account</h2>
 
     <div class="custom-input-group">
+      <span class="material-icons icon">person</span>
+      <input
+        type="text"
+        [(ngModel)]="fullName"
+        name="fullName"
+        required
+        placeholder="Full Name"
+      />
+    </div>
+
+    <div class="custom-input-group">
+      <span class="material-icons icon">account_circle</span>
+      <input
+        type="text"
+        [(ngModel)]="username"
+        name="username"
+        required
+        placeholder="Username"
+      />
+    </div>
+
+    <div class="custom-input-group">
       <span class="material-icons icon">email</span>
       <input
         type="email"
