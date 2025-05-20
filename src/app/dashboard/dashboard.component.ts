@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { RouterModule } from '@angular/router'; // ✅ Import added here
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,7 +14,7 @@ import { RouterModule } from '@angular/router'; // ✅ Import added here
     FormsModule,
     MatButtonModule,
     MatIconModule,
-    RouterModule // ✅ Don't forget the comma before this
+    RouterModule,  // <-- Added missing comma here
   ],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
@@ -68,8 +68,9 @@ export class DashboardComponent {
   }
 
   logout() {
-    // Optional: localStorage.clear();
-    this.router.navigate(['/login']);
- // ✅ Navigates to login page
+    // Optional: clear localStorage or session data here
+    // localStorage.clear();
+
+    this.router.navigate(['/login']); // Navigate to login page
   }
 }

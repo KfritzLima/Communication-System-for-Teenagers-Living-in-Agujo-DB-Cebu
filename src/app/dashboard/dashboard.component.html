@@ -5,7 +5,8 @@
     <div class="nav-icons">
       <button mat-icon-button aria-label="Notifications"><mat-icon>notifications</mat-icon></button>
       <button mat-icon-button aria-label="Profile"><mat-icon>person</mat-icon></button>
-      <button mat-raised-button color="warn" [routerLink]="['/login']">Logout</button>
+      <button mat-raised-button color="warn" (click)="logout()">Logout</button>
+
 
     </div>
   </nav>
