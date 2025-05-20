@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
+import { UserService } from '../user/user.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,14 +15,14 @@ import { RouterModule } from '@angular/router';
     FormsModule,
     MatButtonModule,
     MatIconModule,
-    RouterModule,  // <-- Added missing comma here
+    RouterModule,
   ],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent {
-  constructor(private router: Router) {}
-
+  fullName = '';
+  username = '';
   newPost = '';
   notifications = [
     'Maria commented on your post.',
@@ -40,12 +41,22 @@ export class DashboardComponent {
     }
   ];
 
+  constructor(private router: Router, private userService: UserService) {}
+
+  ngOnInit() {
+    const user = this.userService.getUser();
+    if (user) {
+      this.fullName = user.fullName;
+      this.username = user.username;
+    }
+  }
+
   submitPost() {
     const trimmed = this.newPost.trim();
     if (!trimmed) return;
 
     this.posts.unshift({
-      author: 'You',
+      author: this.fullName || 'You', // use fullName from user or fallback
       timestamp: new Date().toLocaleString(),
       content: trimmed,
       comments: [],
@@ -60,7 +71,7 @@ export class DashboardComponent {
     if (!trimmed) return;
 
     post.comments.push({
-      author: 'You',
+      author: this.fullName || 'You', // use fullName from user or fallback
       text: trimmed
     });
 
@@ -68,9 +79,7 @@ export class DashboardComponent {
   }
 
   logout() {
-    // Optional: clear localStorage or session data here
-    // localStorage.clear();
-
-    this.router.navigate(['/login']); // Navigate to login page
+    this.userService.clearUser();  // Clear user data on logout (optional)
+    this.router.navigate(['/login']);
   }
 }
