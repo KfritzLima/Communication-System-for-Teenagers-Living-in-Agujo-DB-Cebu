@@ -3,8 +3,8 @@
   <nav class="navbar">
     <div class="logo">AGUJO FORUM</div>
     <div class="nav-icons">
-      <button mat-icon-button><mat-icon>notifications</mat-icon></button>
-      <button mat-icon-button><mat-icon>person</mat-icon></button>
+      <button mat-icon-button aria-label="Notifications"><mat-icon>notifications</mat-icon></button>
+      <button mat-icon-button aria-label="Profile"><mat-icon>person</mat-icon></button>
       <button mat-raised-button color="warn" (click)="logout()">Logout</button>
     </div>
   </nav>
@@ -28,10 +28,11 @@
         <button mat-raised-button color="primary" (click)="submitPost()">Post</button>
       </div>
 
-      <!-- Sample Post -->
+      <!-- Posts -->
       <div class="post" *ngFor="let post of posts">
         <div class="post-header">
-          <strong>{{ post.author }}</strong> <span>{{ post.timestamp }}</span>
+          <strong>{{ post.author || 'Anonymous' }}</strong>
+          <span>{{ post.timestamp | date:'short' }}</span>
         </div>
         <p>{{ post.content }}</p>
         <div class="comments">
