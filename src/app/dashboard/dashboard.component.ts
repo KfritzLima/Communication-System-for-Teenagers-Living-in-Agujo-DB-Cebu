@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -17,6 +18,7 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent {
+  constructor(private router: Router) {} 
   newPost = '';
   notifications = ['Maria commented on your post.', 'System maintenance at 10 PM.'];
 
