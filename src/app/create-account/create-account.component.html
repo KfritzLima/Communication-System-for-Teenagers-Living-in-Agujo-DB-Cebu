@@ -2,6 +2,7 @@
   <form (submit)="onSubmit()">
     <h2 class="greeting">Create Your Account</h2>
 
+    <!-- Full Name -->
     <div class="custom-input-group">
       <span class="material-icons icon">person</span>
       <input
@@ -13,8 +14,9 @@
       />
     </div>
 
+    <!-- Username -->
     <div class="custom-input-group">
-      <span class="material-icons icon">account_circle</span>
+      <span class="material-icons icon">person_outline</span>
       <input
         type="text"
         [(ngModel)]="username"
@@ -24,6 +26,7 @@
       />
     </div>
 
+    <!-- Email -->
     <div class="custom-input-group">
       <span class="material-icons icon">email</span>
       <input
@@ -35,6 +38,7 @@
       />
     </div>
 
+    <!-- Password -->
     <div class="custom-input-group">
       <span class="material-icons icon">lock</span>
       <input
