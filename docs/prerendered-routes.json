@@ -1,8 +1,0 @@
-{
-  "routes": {
-    "/AGUJO-FORUM": {},
-    "/AGUJO-FORUM/create-account": {},
-    "/AGUJO-FORUM/dashboard": {},
-    "/AGUJO-FORUM/login": {}
-  }
-}
