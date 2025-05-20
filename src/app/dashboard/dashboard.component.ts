@@ -69,6 +69,7 @@ export class DashboardComponent {
 
   logout() {
     // Optional: localStorage.clear();
-    this.router.navigate(['/login']); // ✅ Navigates to login page
+    this.router.navigate(['/login']);
+ // ✅ Navigates to login page
   }
 }

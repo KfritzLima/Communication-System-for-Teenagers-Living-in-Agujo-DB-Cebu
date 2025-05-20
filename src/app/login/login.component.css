@@ -1,4 +1,4 @@
-/* Styles (e.g., login.component.css) */
+/* Global Reset */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -9,103 +9,109 @@ body, html {
   height: 100%;
   margin: 0;
   font-family: 'Poppins', sans-serif;
-  overflow: hidden;
-}
-
-.container {
+  background: #344256; /* Dark solid background */
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background: #344256; /* Solid background */
+  overflow: hidden; /* optional: remove if you want scrolling */
 }
 
-
-form {
-  background: rgba(118, 75, 162, 0.4); /* dark purple transparency */
-  border-radius: 16px;
-  padding: 40px 30px;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+/* Container for form */
+.container {
   width: 100%;
-  max-width: 340px;
+  max-width: 360px;
+  padding: 40px 30px;
+  background: rgba(118, 75, 162, 0.4); /* translucent dark purple */
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(10px);
   text-align: center;
-  backdrop-filter: none; /* removed blur */
 }
 
+/* Greeting text */
 .greeting {
   font-size: 28px;
-  font-weight: bold;
+  font-weight: 700;
   color: #fff;
   margin-bottom: 30px;
-  font-family: 'Poppins', sans-serif;
 }
 
-.custom-input-group {
-  position: relative;
+/* Angular Material form field overrides */
+.mat-form-field {
+  width: 100%;
   margin-bottom: 20px;
 }
 
-.custom-input-group input {
-  width: 80%;
-  height: 40px;
-  padding: 14px 14px 14px 50px; /* space for icon */
-  font-size: 16px;
-  border: none;
-  border-radius: 8px;
+.mat-form-field-appearance-fill .mat-form-field-flex {
   background: rgba(255, 255, 255, 0.25);
+  border-radius: 8px;
   color: #fff;
-  outline: none;
+}
+
+.mat-input-element {
+  color: #fff !important;
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+}
+
+.mat-form-field-label {
+  color: rgba(255, 255, 255, 0.7) !important;
   font-family: 'Poppins', sans-serif;
 }
 
-.custom-input-group input::placeholder {
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.icon {
-  position: absolute;
-  top: 50%;
-  left: 15px;
-  transform: translateY(-50%);
-  font-size: 20px;
+/* Prefix icon style */
+.mat-form-field .mat-icon {
   color: rgba(255, 255, 255, 0.8);
 }
 
-.login-btn, .create-btn {
+/* Placeholder text style for native inputs (if used) */
+input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Buttons */
+button.mat-raised-button.login-btn {
   width: 100%;
   padding: 14px;
-  margin-top: 20px;
   border-radius: 8px;
-  font-weight: bold;
+  font-weight: 700;
   text-transform: uppercase;
   font-size: 16px;
-  cursor: pointer;
-  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(90deg, #6b46c1, #9f7aea);
+  color: #fff;
+  transition: background 0.3s ease;
 }
 
-.login-btn {
-  background: linear-gradient(90deg, #344256, #344256);
-  color: #fff;
-  border: none;
-  transition: 0.3s ease;
+button.mat-raised-button.login-btn:hover {
+  background: linear-gradient(90deg, #805ad5, #b794f4);
 }
 
-.create-btn {
-  background: transparent;
-  color: #fff;
-  border: 2px solid #fff;
-  transition: 0.3s ease;
+button.mat-stroked-button.create-btn {
+  width: 100%;
+  padding: 14px;
   margin-top: 15px;
+  border-radius: 8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 16px;
+  color: #a060ff;
+  border-color: #a060ff;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
-.login-btn:hover {
-  background: linear-gradient(90deg, #5a67d8, #6b46c1);
+button.mat-stroked-button.create-btn:hover {
+  background: rgba(160, 96, 255, 0.2);
+  color: #fff;
+  border-color: #fff;
 }
 
-.create-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
+/* Snackbar error styling */
+.error-snackbar {
+  background-color: #d32f2f !important;
+  color: #fff !important;
 }
+
+/* Utility purple text class */
 .purple-text {
-  color: #a060ff; /* Or your preferred purple */
+  color: #a060ff;
 }
