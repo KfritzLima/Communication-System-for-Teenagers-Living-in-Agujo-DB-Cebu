@@ -1,4 +1,55 @@
 <div class="dashboard-container">
-  <h1>Welcome to AGUJO FORUM!</h1>
-  <button mat-raised-button color="warn" (click)="logout()" class="logout-button">Logout</button>
+  <!-- Top Navigation Bar -->
+  <nav class="navbar">
+    <div class="logo">AGUJO FORUM</div>
+    <div class="nav-icons">
+      <button mat-icon-button><mat-icon>notifications</mat-icon></button>
+      <button mat-icon-button><mat-icon>person</mat-icon></button>
+      <button mat-raised-button color="warn" (click)="logout()">Logout</button>
+    </div>
+  </nav>
+
+  <!-- Main Content Area -->
+  <div class="content">
+    <!-- Left Sidebar (Profile) -->
+    <aside class="sidebar">
+      <div class="profile-card">
+        <img src="assets/avatar.png" alt="Profile" />
+        <h3>Your Name</h3>
+        <p>username</p>
+      </div>
+    </aside>
+
+    <!-- Center Feed (Posts & Comments) -->
+    <main class="feed">
+      <!-- Post Box -->
+      <div class="post-box">
+        <textarea placeholder="What's on your mind?" [(ngModel)]="newPost"></textarea>
+        <button mat-raised-button color="primary" (click)="submitPost()">Post</button>
+      </div>
+
+      <!-- Sample Post -->
+      <div class="post" *ngFor="let post of posts">
+        <div class="post-header">
+          <strong>{{ post.author }}</strong> <span>{{ post.timestamp }}</span>
+        </div>
+        <p>{{ post.content }}</p>
+        <div class="comments">
+          <div *ngFor="let comment of post.comments">
+            <strong>{{ comment.author }}:</strong> {{ comment.text }}
+          </div>
+          <input [(ngModel)]="post.newComment" placeholder="Write a comment..." />
+          <button mat-button (click)="addComment(post)">Comment</button>
+        </div>
+      </div>
+    </main>
+
+    <!-- Right Sidebar (Notifications) -->
+    <aside class="sidebar right">
+      <h3>Notifications</h3>
+      <ul>
+        <li *ngFor="let note of notifications">{{ note }}</li>
+      </ul>
+    </aside>
+  </div>
 </div>

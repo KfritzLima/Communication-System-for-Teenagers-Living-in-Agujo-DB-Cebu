@@ -1,141 +1,87 @@
 .dashboard-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background: linear-gradient(135deg, #89f7fe, #66a6ff);
-  font-family: 'Poppins', sans-serif;
-  text-align: center;
+  font-family: Arial, sans-serif;
 }
 
-h1 {
-  color: #ffffff;
-  font-size: 36px;
-  font-weight: bold;
-  margin-bottom: 40px;
-}
-
-.logout-button {
-  background: linear-gradient(135deg, #ff5f6d, #ffc371);
-  color: white;
-  border: none;
-  border-radius: 12px;
-  padding: 10px 20px;
-  cursor: pointer;
-  float: right;
-  margin-bottom: 10px;
-}
-
-.card {
-  background: #fff;
-  border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
-}
-
-.dashboard-section h2 {
-  margin-top: 0;
-  margin-bottom: 10px;
-}
-
-.updates-list,
-.events-list {
-  list-style-type: none;
-  padding-left: 0;
-}
-
-.update-item,
-.event-item {
-  padding: 8px 0;
-  border-bottom: 1px solid #eee;
-}
-
-.timestamp,
-.location {
-  font-size: 0.85em;
-  color: #666;
-}
-
-.news-accordion .news-item {
-  margin-bottom: 10px;
-}
-
-.news-header {
-  width: 100%;
-  background: #f0f0f0;
-  border: none;
-  padding: 10px;
-  text-align: left;
-  font-weight: bold;
-  cursor: pointer;
-  border-radius: 8px;
+.navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.news-details {
-  padding: 10px;
-  background: #fafafa;
-  border-radius: 8px;
-  margin-top: 5px;
-}
-
-textarea {
-  width: 100%;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  padding: 10px;
-  resize: vertical;
-  font-size: 1em;
-}
-
-.submit-post-button {
-  margin-top: 10px;
-  background: #66a6ff;
+  background-color: #4267b2;
   color: white;
-  border: none;
-  border-radius: 12px;
-  padding: 10px 25px;
-  cursor: pointer;
-}
-
-.news-feed .post {
-  border-bottom: 1px solid #ddd;
-  padding: 12px 0;
-}
-
-.post-text {
-  margin: 0 0 6px 0;
-}
-
-.post-time {
-  font-size: 0.8em;
-  color: #999;
-}
-
-
-
-.logout-button {
-  float: right;
-  margin: -60px 10px 20px 0;
   padding: 10px 20px;
-  background: linear-gradient(135deg, #ff5f6d, #ffc371);
-  color: white;
-  padding: 12px 30px;
-  font-size: 18px;
-  border-radius: 12px;
-  border: none;
-  cursor: pointer;
 }
 
-.news-feed .post {
-  border-bottom: 1px solid #ddd;
-  padding: 12px 0;
+.logo {
+  font-size: 20px;
+  font-weight: bold;
 }
 
-.logout-button:hover {
-  box-shadow: 0 0 15px rgba(255, 95, 109, 0.6);
+.nav-icons {
+  display: flex;
+  gap: 10px;
+}
+
+.content {
+  display: flex;
+  padding: 20px;
+  gap: 20px;
+}
+
+.sidebar {
+  width: 20%;
+}
+
+.sidebar.right {
+  width: 20%;
+}
+
+.profile-card {
+  background: white;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile-card img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+
+.feed {
+  width: 60%;
+}
+
+.post-box {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.post-box textarea {
+  width: 100%;
+  height: 60px;
+  margin-bottom: 10px;
+}
+
+.post {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.post-header {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.comments {
+  margin-top: 10px;
+  background: #f0f2f5;
+  padding: 10px;
+  border-radius: 6px;
 }

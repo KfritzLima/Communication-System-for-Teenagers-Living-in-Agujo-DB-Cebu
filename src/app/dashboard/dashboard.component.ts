@@ -1,46 +1,63 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatButtonModule,
+    MatIconModule
+  ],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent {
-  updates = [
-    { title: 'New forum category added!', timestamp: new Date() },
-    { title: 'Maintenance scheduled for Friday.', timestamp: new Date('2025-05-23T09:00:00') },
+  newPost = '';
+  notifications = ['Maria commented on your post.', 'System maintenance at 10 PM.'];
+
+  posts = [
+    {
+      author: 'Maria',
+      timestamp: new Date().toLocaleString(),
+      content: 'This is my first post!',
+      comments: [
+        { author: 'Juan', text: 'Welcome Maria!' }
+      ],
+      newComment: ''
+    }
   ];
-
-  events = [
-    { name: 'Community Meetup', date: new Date('2025-05-21'), location: 'Community Hall' },
-    { name: 'Charity Drive', date: new Date('2025-06-01'), location: 'Town Square' },
-  ];
-
-  communityNews = [
-    { headline: 'Local Hero Saves Cat', details: 'John Doe climbed a tree to rescue a cat stuck for hours.', expanded: false },
-    { headline: 'New Library Opening', details: 'A state-of-the-art library opens next month in the town center.', expanded: false },
-  ];
-
-  posts: { content: string; timestamp: Date }[] = [];
-
-  newPost: string = '';
-
-  logout() {
-    alert('Logout clicked!');
-  }
 
   submitPost() {
     if (!this.newPost.trim()) return;
 
     this.posts.unshift({
+      author: 'You',
+      timestamp: new Date().toLocaleString(),
       content: this.newPost.trim(),
-      timestamp: new Date(),
+      comments: [],
+      newComment: ''
     });
 
     this.newPost = '';
+  }
+
+  addComment(post: any) {
+    if (!post.newComment.trim()) return;
+
+    post.comments.push({
+      author: 'You',
+      text: post.newComment.trim()
+    });
+
+    post.newComment = '';
+  }
+
+  logout() {
+    alert('Logged out!');
   }
 }

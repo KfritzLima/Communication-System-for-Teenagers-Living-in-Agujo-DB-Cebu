@@ -29,7 +29,7 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "baseHref": "/AGUJO-FORUM/",
+              "baseHref": "/Communication-System-for-Teenagers-Living-in-Agujo-DB-Cebu/",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
