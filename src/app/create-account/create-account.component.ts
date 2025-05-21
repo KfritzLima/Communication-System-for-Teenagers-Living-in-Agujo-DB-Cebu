@@ -2,9 +2,6 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -14,9 +11,6 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [
     FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
     RouterModule,
     MatSnackBarModule
   ]
@@ -40,7 +34,7 @@ export class CreateAccountComponent {
     localStorage.setItem('userPassword', this.password);
 
     this.snackBar.open('Account created successfully!', 'Close', {
-      duration: 2000,
+      duration: 2000
     });
 
     setTimeout(() => {

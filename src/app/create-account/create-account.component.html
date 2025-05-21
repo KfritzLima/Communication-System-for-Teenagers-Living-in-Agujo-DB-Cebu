@@ -1,18 +1,32 @@
 <div class="container">
   <form (ngSubmit)="createAccount()">
-    <h2>Create Account</h2>
+    <div class="greeting">
+      AGUJO <span class="purple-text">FORUM</span>
+    </div>
 
-    <mat-form-field appearance="fill" class="full-width">
-      <mat-label>Email</mat-label>
-      <input matInput type="email" [(ngModel)]="email" name="email" required />
-    </mat-form-field>
+    <div class="custom-input-group">
+      <i class="icon fas fa-envelope"></i>
+      <input
+        type="email"
+        placeholder="Email"
+        [(ngModel)]="email"
+        name="email"
+        required
+      />
+    </div>
 
-    <mat-form-field appearance="fill" class="full-width">
-      <mat-label>Password</mat-label>
-      <input matInput type="password" [(ngModel)]="password" name="password" required />
-    </mat-form-field>
+    <div class="custom-input-group">
+      <i class="icon fas fa-lock"></i>
+      <input
+        type="password"
+        placeholder="Password"
+        [(ngModel)]="password"
+        name="password"
+        required
+      />
+    </div>
 
-    <button mat-raised-button color="primary" type="submit">Create Account</button>
-    <button mat-button color="accent" routerLink="/login" type="button">Back to Login</button>
+    <button class="login-btn" type="submit">Create Account</button>
+    <button class="create-btn" routerLink="/login" type="button">Back to Login</button>
   </form>
 </div>
