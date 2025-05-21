@@ -1,30 +1,50 @@
 import { Component } from '@angular/core';
-import { RouterModule, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormsModule } from '@angular/forms';
-import { UserService } from '../user/user.service';  // make sure this path is correct
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-create-account',
-  standalone: true,
-  imports: [FormsModule, RouterModule],
   templateUrl: './create-account.component.html',
   styleUrls: ['./create-account.component.css'],
+  standalone: true,
+  imports: [
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    RouterModule,
+    MatSnackBarModule
+  ]
 })
 export class CreateAccountComponent {
-  fullName = '';
-  username = '';
   email = '';
   password = '';
 
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(private router: Router, private snackBar: MatSnackBar) {}
 
-  onSubmit() {
-    this.userService.setUser({
-      fullName: this.fullName,
-      username: this.username,
-      email: this.email,
+  createAccount(): void {
+    if (!this.email || !this.password) {
+      this.snackBar.open('Email and password are required.', 'Close', {
+        duration: 2000,
+        panelClass: ['error-snackbar']
+      });
+      return;
+    }
+
+    localStorage.setItem('userEmail', this.email);
+    localStorage.setItem('userPassword', this.password);
+
+    this.snackBar.open('Account created successfully!', 'Close', {
+      duration: 2000,
     });
 
-    this.router.navigate(['/dashboard']);
+    setTimeout(() => {
+      this.router.navigate(['/login']);
+    }, 2000);
   }
 }

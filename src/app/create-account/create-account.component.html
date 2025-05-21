@@ -1,59 +1,18 @@
 <div class="container">
-  <form (submit)="onSubmit()">
-    <h2 class="greeting">Create Your Account</h2>
+  <form (ngSubmit)="createAccount()">
+    <h2>Create Account</h2>
 
-    <!-- Full Name -->
-    <div class="custom-input-group">
-      <span class="material-icons icon">person</span>
-      <input
-        type="text"
-        [(ngModel)]="fullName"
-        name="fullName"
-        required
-        placeholder="Full Name"
-      />
-    </div>
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" [(ngModel)]="email" name="email" required />
+    </mat-form-field>
 
-    <!-- Username -->
-    <div class="custom-input-group">
-      <span class="material-icons icon">person_outline</span>
-      <input
-        type="text"
-        [(ngModel)]="username"
-        name="username"
-        required
-        placeholder="Username"
-      />
-    </div>
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" [(ngModel)]="password" name="password" required />
+    </mat-form-field>
 
-    <!-- Email -->
-    <div class="custom-input-group">
-      <span class="material-icons icon">email</span>
-      <input
-        type="email"
-        [(ngModel)]="email"
-        name="email"
-        required
-        placeholder="Email Address"
-      />
-    </div>
-
-    <!-- Password -->
-    <div class="custom-input-group">
-      <span class="material-icons icon">lock</span>
-      <input
-        type="password"
-        [(ngModel)]="password"
-        name="password"
-        required
-        placeholder="Password"
-      />
-    </div>
-
-    <button type="submit" class="login-btn">Create Account</button>
-
-    <button type="button" class="create-btn" [routerLink]="['/login']">
-      Already have an account
-    </button>
+    <button mat-raised-button color="primary" type="submit">Create Account</button>
+    <button mat-button color="accent" routerLink="/login" type="button">Back to Login</button>
   </form>
 </div>
