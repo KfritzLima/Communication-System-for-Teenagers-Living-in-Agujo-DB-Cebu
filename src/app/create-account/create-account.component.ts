@@ -16,20 +16,25 @@ import { RouterModule } from '@angular/router';
   ]
 })
 export class CreateAccountComponent {
+  fullName = '';
+  username = '';
   email = '';
   password = '';
 
   constructor(private router: Router, private snackBar: MatSnackBar) {}
 
   createAccount(): void {
-    if (!this.email || !this.password) {
-      this.snackBar.open('Email and password are required.', 'Close', {
+    if (!this.fullName || !this.username || !this.email || !this.password) {
+      this.snackBar.open('All fields are required.', 'Close', {
         duration: 2000,
         panelClass: ['error-snackbar']
       });
       return;
     }
 
+    // Save user data to localStorage (mock implementation)
+    localStorage.setItem('userFullName', this.fullName);
+    localStorage.setItem('userUsername', this.username);
     localStorage.setItem('userEmail', this.email);
     localStorage.setItem('userPassword', this.password);
 
