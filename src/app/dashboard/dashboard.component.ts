@@ -80,7 +80,9 @@ export class DashboardComponent {
   }
 
   logout() {
-    this.userService.clearUser(); // Optional: clear user session
-    this.router.navigate(['/login']);
-  }
+  console.log('Logging out...');
+  this.userService.clearUser();
+  this.router.navigate(['/login']);
+}
+
 }
