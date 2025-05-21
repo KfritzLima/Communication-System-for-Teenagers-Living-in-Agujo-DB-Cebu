@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { UserService } from '../user/user.service'; // <-- Import UserService
 
 @Component({
   selector: 'app-create-account',
@@ -21,7 +22,11 @@ export class CreateAccountComponent {
   email = '';
   password = '';
 
-  constructor(private router: Router, private snackBar: MatSnackBar) {}
+  constructor(
+    private router: Router,
+    private snackBar: MatSnackBar,
+    private userService: UserService // <-- Inject UserService
+  ) {}
 
   createAccount(): void {
     if (!this.fullName || !this.username || !this.email || !this.password) {
@@ -32,7 +37,14 @@ export class CreateAccountComponent {
       return;
     }
 
-    // Save user data to localStorage (mock implementation)
+    // Save to service
+    this.userService.setUser({
+      fullName: this.fullName,
+      username: this.username,
+      email: this.email
+    });
+
+    // Also save to localStorage (optional)
     localStorage.setItem('userFullName', this.fullName);
     localStorage.setItem('userUsername', this.username);
     localStorage.setItem('userEmail', this.email);
