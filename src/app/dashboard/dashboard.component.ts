@@ -15,7 +15,7 @@ import { UserService } from '../user/user.service';
     FormsModule,
     MatButtonModule,
     MatIconModule,
-    RouterModule,
+    RouterModule
   ],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
@@ -56,7 +56,7 @@ export class DashboardComponent {
     if (!trimmed) return;
 
     this.posts.unshift({
-      author: this.fullName || 'You', // use fullName from user or fallback
+      author: this.fullName || 'You',
       timestamp: new Date().toLocaleString(),
       content: trimmed,
       comments: [],
@@ -71,7 +71,7 @@ export class DashboardComponent {
     if (!trimmed) return;
 
     post.comments.push({
-      author: this.fullName || 'You', // use fullName from user or fallback
+      author: this.fullName || 'You',
       text: trimmed
     });
 
@@ -79,7 +79,7 @@ export class DashboardComponent {
   }
 
   logout() {
-    this.userService.clearUser();  // Clear user data on logout (optional)
+    this.userService.clearUser();
     this.router.navigate(['/login']);
   }
 }
