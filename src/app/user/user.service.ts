@@ -1,34 +1,20 @@
-// src/app/user/user.service.ts
-
 import { Injectable } from '@angular/core';
 
-export interface User {
-  fullName: string;
-  username: string;
-  email: string;
-}
-
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class UserService {
-  private user: User | null = null;
+  private userData: any = null;
 
-  // Save user data
-  setUser(user: User): void {
-    this.user = user;
-    console.log('UserService: setUser called:', user);
+  setUser(data: any) {
+    this.userData = data;
   }
 
-  // Get user data
-  getUser(): User | null {
-    console.log('UserService: getUser called:', this.user);
-    return this.user;
+  getUser() {
+    return this.userData;
   }
 
-  // Clear user data (e.g., logout)
-  clearUser(): void {
-    this.user = null;
-    console.log('UserService: clearUser called');
+  clearUser() {
+    this.userData = null;
   }
 }
