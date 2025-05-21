@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
-import { UserService } from '../user/user.service'; // ✅ Make sure this path is correct
+import { UserService } from '../user/user.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,7 +15,7 @@ import { UserService } from '../user/user.service'; // ✅ Make sure this path i
     FormsModule,
     MatButtonModule,
     MatIconModule,
-    RouterModule
+    RouterModule,
   ],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
@@ -24,7 +24,6 @@ export class DashboardComponent {
   fullName = '';
   username = '';
   newPost = '';
-
   notifications = [
     'Maria commented on your post.',
     'System maintenance at 10 PM.'
@@ -57,7 +56,7 @@ export class DashboardComponent {
     if (!trimmed) return;
 
     this.posts.unshift({
-      author: this.fullName || 'You',
+      author: this.fullName || 'You', // use fullName from user or fallback
       timestamp: new Date().toLocaleString(),
       content: trimmed,
       comments: [],
@@ -72,7 +71,7 @@ export class DashboardComponent {
     if (!trimmed) return;
 
     post.comments.push({
-      author: this.fullName || 'You',
+      author: this.fullName || 'You', // use fullName from user or fallback
       text: trimmed
     });
 
@@ -80,9 +79,7 @@ export class DashboardComponent {
   }
 
   logout() {
-  console.log('Logging out...');
-  this.userService.clearUser();
-  this.router.navigate(['/login']);
-}
-
+    this.userService.clearUser();  // Clear user data on logout (optional)
+    this.router.navigate(['/login']);
+  }
 }
