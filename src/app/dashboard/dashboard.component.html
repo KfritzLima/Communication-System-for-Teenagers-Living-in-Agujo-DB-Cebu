@@ -1,1 +1,35 @@
-<p>dashboard works!</p>
+<div class="forum-container">
+  <header class="forum-header">
+    <h1>AGUJOFORUM</h1>
+    <div class="header-actions">
+      <i class="bell-icon">🔔</i>
+      <i class="settings-icon">⚙️</i>
+      <button (click)="logout()">Logout</button>
+    </div>
+  </header>
+
+  <section class="welcome">
+    <h2>Welcome, {{ fullName }}</h2>
+  </section>
+
+  <section class="post-input">
+    <textarea [(ngModel)]="newPost" placeholder="What's on your mind?"></textarea>
+    <button (click)="addPost()">Post</button>
+  </section>
+
+  <section class="posts">
+    <div *ngFor="let post of posts" class="post-card">
+      <h3>{{ post.author }}</h3>
+      <p>{{ post.content }}</p>
+
+      <div class="comment-section">
+        <input [(ngModel)]="post.newComment" placeholder="Write a comment..." />
+        <button (click)="addComment(post)">Comment</button>
+
+        <div class="comment" *ngFor="let comment of post.comments">
+          <strong>{{ comment.author }}:</strong> {{ comment.text }}
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

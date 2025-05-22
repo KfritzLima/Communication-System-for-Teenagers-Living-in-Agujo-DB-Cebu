@@ -14,7 +14,16 @@
     "moduleResolution": "bundler",
     "importHelpers": true,
     "target": "ES2022",
-    "module": "ES2022"
+    "module": "ES2022",
+
+    // ✅ Add these two:
+    "baseUrl": "src",
+    "paths": {
+      "@login/*": ["app/login/*"],
+      "@dashboard/*": ["app/dashboard/*"],
+      "@config/*": ["app/config/*"],
+      "@auth/*": ["app/auth.guard.ts"]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
