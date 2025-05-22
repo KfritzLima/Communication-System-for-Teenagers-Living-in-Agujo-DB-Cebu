@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -30,6 +30,16 @@ export class DashboardComponent {
     }
   ];
 
+  constructor(private router: Router) {}
+
+  logout() {
+    // Clear any user data or tokens
+    localStorage.clear();
+
+    // Navigate to the login page
+    this.router.navigate(['/login']);
+  }
+
   submitPost() {
     if (!this.newPost.trim()) return;
     this.posts.unshift({
@@ -48,11 +58,5 @@ export class DashboardComponent {
       text: post.newComment.trim()
     });
     post.newComment = '';
-  }
-
-  logout() {
-    // Add your logout logic here:
-    console.log('User logged out');
-    // For example, clear tokens, redirect, etc.
   }
 }
