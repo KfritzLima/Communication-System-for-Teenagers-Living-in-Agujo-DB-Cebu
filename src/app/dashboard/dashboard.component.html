@@ -1,35 +1,35 @@
-<div class="forum-container">
+<div class="forum-wrapper">
   <header class="forum-header">
     <h1>AGUJOFORUM</h1>
-    <div class="header-actions">
-      <i class="bell-icon">🔔</i>
-      <i class="settings-icon">⚙️</i>
-      <button (click)="logout()">Logout</button>
+    <div class="header-controls">
+      <span class="icon">🔔</span>
+      <span class="icon">⚙️</span>
+      <button class="logout-btn" (click)="logout()">Logout</button>
     </div>
   </header>
 
-  <section class="welcome">
+  <div class="welcome-msg">
     <h2>Welcome, {{ fullName }}</h2>
-  </section>
+  </div>
 
-  <section class="post-input">
+  <div class="post-input">
     <textarea [(ngModel)]="newPost" placeholder="What's on your mind?"></textarea>
-    <button (click)="addPost()">Post</button>
-  </section>
+    <button class="post-btn" (click)="addPost()">Post</button>
+  </div>
 
-  <section class="posts">
-    <div *ngFor="let post of posts" class="post-card">
+  <div class="post-list">
+    <div class="post-card" *ngFor="let post of posts">
       <h3>{{ post.author }}</h3>
       <p>{{ post.content }}</p>
 
-      <div class="comment-section">
+      <div class="comment-box">
         <input [(ngModel)]="post.newComment" placeholder="Write a comment..." />
-        <button (click)="addComment(post)">Comment</button>
+        <button class="comment-btn" (click)="addComment(post)">Comment</button>
 
         <div class="comment" *ngFor="let comment of post.comments">
           <strong>{{ comment.author }}:</strong> {{ comment.text }}
         </div>
       </div>
     </div>
-  </section>
+  </div>
 </div>
