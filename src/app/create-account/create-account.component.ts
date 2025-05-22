@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { UserService } from '../user/user.service'; // <-- Import UserService
+import { UserService } from '../user/user.service';
 
 @Component({
   selector: 'app-create-account',
@@ -25,7 +25,7 @@ export class CreateAccountComponent {
   constructor(
     private router: Router,
     private snackBar: MatSnackBar,
-    private userService: UserService // <-- Inject UserService
+    private userService: UserService
   ) {}
 
   createAccount(): void {
@@ -37,23 +37,25 @@ export class CreateAccountComponent {
       return;
     }
 
-    // Save to service
+    // Save user data using UserService
     this.userService.setUser({
       fullName: this.fullName,
       username: this.username,
       email: this.email
     });
 
-    // Also save to localStorage (optional)
+    // Optionally store in localStorage
     localStorage.setItem('userFullName', this.fullName);
     localStorage.setItem('userUsername', this.username);
     localStorage.setItem('userEmail', this.email);
-    localStorage.setItem('userPassword', this.password);
+    localStorage.setItem('userPassword', this.password); // Consider encrypting in real apps
 
+    // Show success message
     this.snackBar.open('Account created successfully!', 'Close', {
       duration: 2000
     });
 
+    // Navigate to login after delay
     setTimeout(() => {
       this.router.navigate(['/login']);
     }, 2000);

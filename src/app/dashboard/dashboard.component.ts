@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule, Router } from '@angular/router';
+import { UserService } from '../user/user.service'; // Import UserService
 
 @Component({
   selector: 'app-dashboard',
@@ -19,7 +20,7 @@ import { RouterModule, Router } from '@angular/router';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent {
-  fullName = 'John Doe';
+  fullName: string = '';
   newPost = '';
   posts = [
     {
@@ -30,13 +31,15 @@ export class DashboardComponent {
     }
   ];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private userService: UserService) {
+    // Load user data from service or fallback to localStorage
+    const user = this.userService.getUser();
+    this.fullName = user?.fullName || localStorage.getItem('userFullName') || 'John Doe';
+  }
 
   logout() {
-    // Clear any user data or tokens
+    this.userService.clearUser();
     localStorage.clear();
-
-    // Navigate to the login page
     this.router.navigate(['/login']);
   }
 
