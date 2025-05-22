@@ -1,16 +1,31 @@
-<div>
+<nav class="navbar">
+  <div class="navbar-left">PurpleForum</div>
+  <div class="navbar-right">
+    <span class="icon" title="Notifications">🔔</span>
+    <span class="icon" title="Settings">⚙️</span>
+    <button class="logout-button" (click)="logout()">Logout</button>
+  </div>
+</nav>
+
+<div class="container">
   <h2>Welcome, {{ fullName }}</h2>
   
   <textarea [(ngModel)]="newPost" placeholder="What's on your mind?"></textarea>
-  <button mat-raised-button color="primary" (click)="submitPost()">Post</button>
-  
-  <div *ngFor="let post of posts">
-    <h3>{{ post.author }}</h3>
+  <button class="post-btn" (click)="submitPost()">Post</button>
+
+  <div *ngFor="let post of posts" class="post-card">
+    <h3 class="post-author">{{ post.author }}</h3>
     <p>{{ post.content }}</p>
-    <input [(ngModel)]="post.newComment" placeholder="Write a comment..." />
-    <button (click)="addComment(post)">Comment</button>
-    <div *ngFor="let comment of post.comments">
-      <b>{{ comment.author }}:</b> {{ comment.text }}
+
+    <input
+      class="comment-input"
+      [(ngModel)]="post.newComment"
+      placeholder="Write a comment..."
+    />
+    <button class="comment-btn" (click)="addComment(post)">Comment</button>
+
+    <div *ngFor="let comment of post.comments" class="comment">
+      <b class="comment-author">{{ comment.author }}:</b> {{ comment.text }}
     </div>
   </div>
 </div>

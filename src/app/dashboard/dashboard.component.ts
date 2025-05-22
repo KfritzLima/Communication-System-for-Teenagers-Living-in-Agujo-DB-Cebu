@@ -49,4 +49,10 @@ export class DashboardComponent {
     });
     post.newComment = '';
   }
+
+  logout() {
+    // Add your logout logic here:
+    console.log('User logged out');
+    // For example, clear tokens, redirect, etc.
+  }
 }
