@@ -1,92 +1,105 @@
-/* dashboard.component.css */
-
 :host {
   display: block;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f5f0fa;
+  background-color: #f4efff;
   padding: 10px;
+  color: #2c2c2c;
 }
 
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #5a189a;
+  background: linear-gradient(to right, #5a189a, #7b2cbf);
   color: white;
-  padding: 10px 15px;
-  border-radius: 10px;
+  padding: 12px 18px;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(90, 24, 154, 0.3);
 }
 
 .navbar-left {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   font-weight: bold;
+  letter-spacing: 1px;
 }
 
 .navbar-right {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .navbar-right .icon {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   cursor: pointer;
 }
 
 .logout-button {
-  background-color: transparent;
+  background-color: rgba(255, 255, 255, 0.2);
   color: white;
   border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
   font-size: 1rem;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.logout-button:hover {
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
 .profile-section {
   text-align: center;
-  margin: 20px 0;
+  margin: 25px 0;
 }
 
 .profile-section img {
-  width: 80px;
-  height: 80px;
+  width: 90px;
+  height: 90px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #5a189a;
+  border: 3px solid #5a189a;
+  box-shadow: 0 0 10px rgba(90, 24, 154, 0.3);
 }
 
 .welcome-text {
-  font-size: 1.3rem;
-  margin: 10px 0;
+  font-size: 1.4rem;
+  margin-top: 10px;
   font-weight: 600;
+  color: #5a189a;
 }
 
 .post-box, .post-card, .notifications {
-  background-color: white;
-  padding: 15px;
-  margin-bottom: 15px;
-  border-radius: 15px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  background-color: #ffffff;
+  padding: 18px;
+  margin-bottom: 20px;
+  border-radius: 18px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
 }
 
 textarea {
   width: 100%;
   resize: none;
-  height: 80px;
-  padding: 10px;
-  border-radius: 10px;
+  height: 90px;
+  padding: 12px;
+  border-radius: 12px;
   border: 1px solid #ccc;
-  margin-bottom: 10px;
   font-size: 1rem;
+  margin-bottom: 12px;
 }
 
 button {
   background-color: #7b2cbf;
   color: white;
   border: none;
-  padding: 8px 16px;
+  padding: 10px 20px;
   border-radius: 10px;
   font-size: 1rem;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+button:hover {
+  background-color: #6a1bb0;
 }
 
 .post-author {
@@ -96,33 +109,39 @@ button {
 
 .comment-author {
   font-weight: bold;
+  color: #4b0082;
 }
 
 input[type="text"] {
   width: 100%;
-  padding: 8px;
-  border-radius: 8px;
+  padding: 10px;
+  border-radius: 10px;
   border: 1px solid #ccc;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  font-size: 1rem;
+  margin: 10px 0;
 }
 
 .notifications ul {
   padding-left: 20px;
+  margin: 0;
+}
+
+.notifications li {
+  margin-bottom: 6px;
 }
 
 @media screen and (max-width: 600px) {
   .navbar-left {
-    font-size: 1rem;
+    font-size: 1.2rem;
   }
 
   .navbar-right .icon,
   .logout-button {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
   }
 
   .post-box, .post-card, .notifications {
-    padding: 12px;
+    padding: 14px;
   }
 
   textarea, input[type="text"] {
@@ -130,6 +149,6 @@ input[type="text"] {
   }
 
   .welcome-text {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
   }
 }
