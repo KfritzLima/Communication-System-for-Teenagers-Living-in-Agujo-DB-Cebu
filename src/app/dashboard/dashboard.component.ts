@@ -13,6 +13,13 @@ import { Router } from '@angular/router';
 export class DashboardComponent {
   fullName: string | null = '';
   newPost: string = '';
+  showNotifications: boolean = false;
+
+  notifications: string[] = [
+    'Lyle Condes posted: Hello Agujo!!',
+    'Someone commented on your post'
+  ];
+
   posts: {
     author: string;
     content: string;
@@ -59,6 +66,10 @@ export class DashboardComponent {
       });
       post.newComment = '';
     }
+  }
+
+  toggleNotifications(): void {
+    this.showNotifications = !this.showNotifications;
   }
 
   logout(): void {

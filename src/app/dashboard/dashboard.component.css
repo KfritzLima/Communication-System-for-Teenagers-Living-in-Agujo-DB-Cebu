@@ -37,8 +37,45 @@ body {
 
 .header-controls .icon {
   font-size: 20px;
+  cursor: pointer;
 }
 
+/* Notification dropdown */
+.notification-wrapper {
+  position: relative;
+}
+
+.notifications-dropdown {
+  position: absolute;
+  top: 30px;
+  right: 0;
+  background-color: white;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 220px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  z-index: 100;
+}
+
+.notifications-dropdown ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.notifications-dropdown li {
+  padding: 6px 0;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+}
+
+.notifications-dropdown li:last-child {
+  border-bottom: none;
+}
+
+/* Logout button */
 .logout-btn {
   background-color: white;
   color: #6b46c1;

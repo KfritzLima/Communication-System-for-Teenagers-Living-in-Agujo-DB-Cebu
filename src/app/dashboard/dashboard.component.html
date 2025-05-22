@@ -3,7 +3,19 @@
   <header class="forum-header">
     <h1>AGUJOFORUM</h1>
     <div class="header-controls">
-      <span class="icon">🔔</span>
+      <!-- Notification Icon with toggle -->
+      <div class="notification-wrapper">
+        <span class="icon" (click)="toggleNotifications()">🔔</span>
+        <div class="notifications-dropdown" *ngIf="showNotifications">
+          <p *ngIf="notifications.length === 0">No new notifications</p>
+          <ul>
+            <li *ngFor="let notification of notifications">
+              {{ notification }}
+            </li>
+          </ul>
+        </div>
+      </div>
+
       <span class="icon">⚙️</span>
       <button class="logout-btn" (click)="logout()">Logout</button>
     </div>
@@ -22,17 +34,14 @@
 
   <!-- Posts Display -->
   <div class="post-list">
-    <!-- Each Post -->
     <div class="post-card" *ngFor="let post of posts">
       <h3>{{ post.author }}</h3>
       <p>{{ post.content }}</p>
 
-      <!-- Comment Section -->
       <div class="comment-box">
         <input [(ngModel)]="post.newComment" placeholder="Write a comment..." />
         <button class="comment-btn" (click)="addComment(post)">Comment</button>
 
-        <!-- Display Comments -->
         <div class="comment" *ngFor="let comment of post.comments">
           <strong>{{ comment.author }}:</strong> {{ comment.text }}
         </div>
