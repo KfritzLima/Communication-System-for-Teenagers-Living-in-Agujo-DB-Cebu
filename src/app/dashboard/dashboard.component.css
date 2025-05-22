@@ -183,3 +183,58 @@ button.comment-btn:hover {
     font-size: 0.95rem;
   }
 }
+/* Notification Dropdown */
+.notification-dropdown {
+  position: absolute;
+  top: 65px;
+  right: 20px;
+  width: 280px;
+  background: #fff;
+  color: #333;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  overflow: hidden;
+  transition: opacity 0.3s ease;
+}
+
+.notification-dropdown h4 {
+  background-color: #5a189a;
+  color: white;
+  margin: 0;
+  padding: 12px 16px;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.notification-dropdown ul {
+  list-style: none;
+  padding: 10px 16px;
+  margin: 0;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.notification-dropdown li {
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+  font-size: 0.95rem;
+}
+
+.notification-dropdown li:last-child {
+  border-bottom: none;
+}
+
+/* Scrollbar */
+.notification-dropdown ul::-webkit-scrollbar {
+  width: 6px;
+}
+.notification-dropdown ul::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 10px;
+}
+.notification-dropdown ul::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}
+

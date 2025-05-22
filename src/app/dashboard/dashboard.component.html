@@ -1,12 +1,20 @@
 <nav class="navbar">
   <div class="navbar-left">
-  <span class="normal-text">AGUJO</span>
-  <span class="purple-text">FORUM</span>
-</div>
+    <span class="normal-text">AGUJO</span>
+    <span class="purple-text">FORUM</span>
+  </div>
 
-  
   <div class="navbar-right">
-    <span class="icon" title="Notifications">🔔</span>
+    <div class="notification-wrapper" (click)="toggleNotifications()" tabindex="0">
+      <span class="icon" title="Notifications">🔔</span>
+      <div *ngIf="showNotifications" class="notification-dropdown">
+        <h4>Notifications</h4>
+        <ul>
+          <li *ngFor="let note of notifications">{{ note }}</li>
+        </ul>
+      </div>
+    </div>
+
     <span class="icon" title="Settings">⚙️</span>
     <button class="logout-button" (click)="logout()">Logout</button>
   </div>

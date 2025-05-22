@@ -31,6 +31,15 @@ export class DashboardComponent {
     }
   ];
 
+  // ✅ Notification state and sample notifications
+  showNotifications = false;
+  notifications: string[] = [
+    'Maria commented on your post.',
+    'System maintenance at 10 PM.',
+    'New community event on Saturday!',
+    'Youth leadership seminar announced.'
+  ];
+
   constructor(private router: Router, private userService: UserService) {
     // Load user data from service or fallback to localStorage
     const user = this.userService.getUser();
@@ -61,5 +70,10 @@ export class DashboardComponent {
       text: post.newComment.trim()
     });
     post.newComment = '';
+  }
+
+  // ✅ Toggle notifications panel
+  toggleNotifications() {
+    this.showNotifications = !this.showNotifications;
   }
 }
