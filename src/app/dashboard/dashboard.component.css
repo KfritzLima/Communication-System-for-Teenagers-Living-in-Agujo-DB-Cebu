@@ -65,7 +65,7 @@ h2 {
 }
 
 textarea {
-  width: 100%;
+  width: 90%;
   resize: none;
   height: 80px;
   padding: 12px;
@@ -87,7 +87,7 @@ button.post-btn {
   color: white;
   border: none;
   padding: 12px 24px;
-  border-radius: 12px;
+  border-radius: 10px;
   font-size: 1rem;
   cursor: pointer;
   box-shadow: 0 5px 15px rgba(123, 44, 191, 0.4);
