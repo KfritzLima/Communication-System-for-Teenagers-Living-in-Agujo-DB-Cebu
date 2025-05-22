@@ -1,59 +1,16 @@
-<div class="dashboard-container">
-  <!-- Top Navigation Bar -->
-  <nav class="navbar">
-    <div class="navbar-left">AGUJO FORUM</div>
-    <div class="navbar-right">
-      <button mat-icon-button aria-label="Notifications">
-        <mat-icon>notifications</mat-icon>
-      </button>
-      <button mat-icon-button aria-label="Profile">
-        <mat-icon>person</mat-icon>
-      </button>
-      <button mat-raised-button color="warn" (click)="logout()">Logout</button>
+<div>
+  <h2>Welcome, {{ fullName }}</h2>
+  
+  <textarea [(ngModel)]="newPost" placeholder="What's on your mind?"></textarea>
+  <button mat-raised-button color="primary" (click)="submitPost()">Post</button>
+  
+  <div *ngFor="let post of posts">
+    <h3>{{ post.author }}</h3>
+    <p>{{ post.content }}</p>
+    <input [(ngModel)]="post.newComment" placeholder="Write a comment..." />
+    <button (click)="addComment(post)">Comment</button>
+    <div *ngFor="let comment of post.comments">
+      <b>{{ comment.author }}:</b> {{ comment.text }}
     </div>
-  </nav>
-
-  <!-- Main Content Area -->
-  <div class="content">
-    <!-- Left Sidebar (Profile) -->
-    <aside class="sidebar">
-      <div class="profile-card">
-        <img src="assets/avatar.png" alt="Profile" />
-        <h2>Welcome, {{ fullName }}</h2>
-      </div>
-    </aside>
-
-    <!-- Center Feed (Posts & Comments) -->
-    <main class="feed">
-      <!-- Post Box -->
-      <div class="post-box">
-        <textarea placeholder="What's on your mind?" [(ngModel)]="newPost"></textarea>
-        <button mat-raised-button color="primary" (click)="submitPost()">Post</button>
-      </div>
-
-      <!-- Posts -->
-      <div class="post" *ngFor="let post of posts">
-        <div class="post-header">
-          <strong>{{ post.author || 'Anonymous' }}</strong>
-          <span>{{ post.timestamp | date:'short' }}</span>
-        </div>
-        <p>{{ post.content }}</p>
-        <div class="comments">
-          <div *ngFor="let comment of post.comments">
-            <strong>{{ comment.author }}:</strong> {{ comment.text }}
-          </div>
-          <input [(ngModel)]="post.newComment" placeholder="Write a comment..." />
-          <button mat-button (click)="addComment(post)">Comment</button>
-        </div>
-      </div>
-    </main>
-
-    <!-- Right Sidebar (Notifications) -->
-    <aside class="sidebar right">
-      <h3>Notifications</h3>
-      <ul>
-        <li *ngFor="let note of notifications">{{ note }}</li>
-      </ul>
-    </aside>
   </div>
 </div>
