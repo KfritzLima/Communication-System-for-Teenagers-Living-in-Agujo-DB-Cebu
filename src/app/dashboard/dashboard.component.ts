@@ -29,6 +29,14 @@ export class DashboardComponent {
     }
 
     this.fullName = localStorage.getItem('userFullName') || 'User';
+
+    // ✅ Preloaded post from Lyle Condes
+    this.posts.push({
+      author: 'Lyle Condes',
+      content: 'Hello Agujo!!',
+      comments: [],
+      newComment: ''
+    });
   }
 
   addPost(): void {

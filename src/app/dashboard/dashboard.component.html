@@ -1,4 +1,5 @@
 <div class="forum-wrapper">
+  <!-- Header Section -->
   <header class="forum-header">
     <h1>AGUJOFORUM</h1>
     <div class="header-controls">
@@ -8,24 +9,30 @@
     </div>
   </header>
 
+  <!-- Welcome Message -->
   <div class="welcome-msg">
     <h2>Welcome, {{ fullName }}</h2>
   </div>
 
+  <!-- Post Input -->
   <div class="post-input">
     <textarea [(ngModel)]="newPost" placeholder="What's on your mind?"></textarea>
     <button class="post-btn" (click)="addPost()">Post</button>
   </div>
 
+  <!-- Posts Display -->
   <div class="post-list">
+    <!-- Each Post -->
     <div class="post-card" *ngFor="let post of posts">
       <h3>{{ post.author }}</h3>
       <p>{{ post.content }}</p>
 
+      <!-- Comment Section -->
       <div class="comment-box">
         <input [(ngModel)]="post.newComment" placeholder="Write a comment..." />
         <button class="comment-btn" (click)="addComment(post)">Comment</button>
 
+        <!-- Display Comments -->
         <div class="comment" *ngFor="let comment of post.comments">
           <strong>{{ comment.author }}:</strong> {{ comment.text }}
         </div>
