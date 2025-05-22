@@ -85,7 +85,7 @@ textarea:focus {
 button.post-btn {
   background: linear-gradient(135deg, #7b2cbf, #5a189a);
   color: white;
-  border: none;
+  border: 10px;
   padding: 12px 24px;
   border-radius: 10px;
   font-size: 1rem;
