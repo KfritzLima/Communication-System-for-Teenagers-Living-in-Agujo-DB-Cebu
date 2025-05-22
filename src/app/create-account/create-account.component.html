@@ -1,5 +1,5 @@
 <div class="container">
-  <form (ngSubmit)="createAccount()">
+  <form (ngSubmit)="createAccount()" #accountForm="ngForm" novalidate>
     <div class="greeting">
       AGUJO <span class="purple-text">FORUM</span>
     </div>
@@ -12,7 +12,11 @@
         [(ngModel)]="fullName"
         name="fullName"
         required
+        #fullNameInput="ngModel"
       />
+      <div *ngIf="fullNameInput.invalid && fullNameInput.touched" class="error">
+        Full Name is required.
+      </div>
     </div>
 
     <div class="custom-input-group">
@@ -23,7 +27,11 @@
         [(ngModel)]="username"
         name="username"
         required
+        #usernameInput="ngModel"
       />
+      <div *ngIf="usernameInput.invalid && usernameInput.touched" class="error">
+        Username is required.
+      </div>
     </div>
 
     <div class="custom-input-group">
@@ -34,7 +42,12 @@
         [(ngModel)]="email"
         name="email"
         required
+        email
+        #emailInput="ngModel"
       />
+      <div *ngIf="emailInput.invalid && emailInput.touched" class="error">
+        Please enter a valid email.
+      </div>
     </div>
 
     <div class="custom-input-group">
@@ -45,10 +58,28 @@
         [(ngModel)]="password"
         name="password"
         required
+        minlength="6"
+        #passwordInput="ngModel"
       />
+      <div *ngIf="passwordInput.invalid && passwordInput.touched" class="error">
+        Password is required (min 6 chars).
+      </div>
     </div>
 
-    <button class="login-btn" type="submit">Create Account</button>
-    <button class="create-btn" routerLink="/login" type="button">Back to Login</button>
+    <button
+      class="login-btn"
+      type="submit"
+      [disabled]="accountForm.invalid"
+    >
+      Create Account
+    </button>
+
+    <button
+      class="create-btn"
+      routerLink="/login"
+      type="button"
+    >
+      Back to Login
+    </button>
   </form>
 </div>

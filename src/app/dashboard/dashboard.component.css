@@ -1,33 +1,23 @@
-:host {
-  display: block;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f4efff;
-  color: #2c2c2c;
-  padding: 10px;
-}
-
-/* Navbar */
-.navbar {
+.dashboard-container {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: auto;
+  min-height: 100vh;
   background: linear-gradient(135deg, #89f7fe, #66a6ff);
+  min-height: 100vh;
   font-family: 'Poppins', sans-serif;
   text-align: center;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
-.navbar-left {
-  font-size: 1.5rem;
+h1 {
+  color: #ffffff;
+  font-size: 36px;
   font-weight: bold;
-  letter-spacing: 1px;
-  display: flex;
-}
-
-.navbar-right {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+  margin-bottom: 40px;
 }
 
 .navbar-right .icon {
@@ -37,110 +27,87 @@
 
 /* Logout button */
 .logout-button {
-  background: #ff5f6d;
   background: linear-gradient(135deg, #ff5f6d, #ffc371);
   color: white;
+  padding: 12px 30px;
+  font-size: 18px;
+  border-radius: 12px;
   border: none;
-  padding: 8px 16px;
-  border-radius: 12px;
-  font-size: 1rem;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(123, 44, 191, 0.5);
-  font-weight: 600;
-  transition: all 0.3s ease;
-}
-.logout-button:hover {
-  background: linear-gradient(135deg, #5a189a, #7b2cbf);
-  box-shadow: 0 6px 18px rgba(90, 24, 154, 0.7);
-  transform: translateY(-2px);
-}
-
-/* Container */
-.container {
-  margin-top: 25px;
-}
-
-h2 {
-  color: #5a189a;
-}
-
-textarea {
-  width: 90%;
-  resize: none;
-  height: 80px;
-  padding: 12px;
-  border-radius: 12px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
-  margin-bottom: 12px;
-  transition: box-shadow 0.3s ease, border-color 0.3s ease;
-}
-textarea:focus {
-  border-color: #7b2cbf;
-  box-shadow: 0 0 8px rgba(123, 44, 191, 0.7);
-  outline: none;
-}
-
-/* Buttons */
-button.post-btn {
-  background: linear-gradient(135deg, #7b2cbf, #5a189a);
-  color: white;
-  padding: 12px 24px;
-  border-radius: 10px;
-  font-size: 1rem;
-  cursor: pointer;
-  box-shadow: 0 5px 15px rgba(123, 44, 191, 0.4);
-  transition: all 0.35s ease;
-  font-weight: 600;
-}
-button.post-btn:hover {
-  background: linear-gradient(135deg, #5a189a, #7b2cbf);
-  box-shadow: 0 7px 20px rgba(90, 24, 154, 0.6);
-  transform: translateY(-2px);
-}
-
-/* Post card */
-.post-card {
-  background-color: #ffffff;
-  padding: 18px;
-  margin-bottom: 20px;
-  border-radius: 18px;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-}
-
-.post-author {
-  font-weight: bold;
-  color: #5a189a;
-  margin-bottom: 8px;
-}
-
-/* Comment input and button */
-input.comment-input {
-  width: 90%;
-  padding: 10px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
-  margin: 10px 0 14px;
-  transition: box-shadow 0.3s ease, border-color 0.3s ease;
-}
-input.comment-input:focus {
-  border-color: #7b2cbf;
-  box-shadow: 0 0 8px rgba(123, 44, 191, 0.7);
-  outline: none;
-}
-
-button.comment-btn {
-  background: linear-gradient(135deg, #7b2cbf, #5a189a);
-  color: white;
-  border: none;
-  padding: 8px 20px;
-  border-radius: 12px;
-  font-size: 1rem;
   cursor: pointer;
   transition: 0.3s;
+  position: absolute;
+  top: 20px;
+  right: 20px;
 }
 
 .logout-button:hover {
   box-shadow: 0 0 15px rgba(255, 95, 109, 0.6);
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+  width: 100%;
+  max-width: 1200px;
+  margin-top: 20px;
+}
+
+.dashboard-card {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  text-align: left;
+}
+
+.dashboard-card h2 {
+  margin-top: 0;
+  color: #333;
+  font-size: 22px;
+  margin-bottom: 15px;
+}
+
+.item-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.item-list li {
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.item-list li:last-child {
+  border-bottom: none;
+}
+
+.item-title {
+  font-weight: 500;
+  margin: 0;
+}
+
+.accordion-toggle {
+  width: 100%;
+  text-align: left;
+  padding: 10px;
+  font-size: 16px;
+  background-color: #f0f0f0;
+  border: none;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.accordion-toggle:hover {
+  background-color: #e0e0e0;
+}
+
+.accordion-content {
+  padding: 10px;
+  background-color: #fafafa;
+  border-left: 3px solid #66a6ff;
+  border-radius: 0 0 8px 8px;
 }

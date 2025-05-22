@@ -30,7 +30,7 @@
     <div class="dashboard-card">
       <h2>Community News</h2>
       <div class="accordion" *ngFor="let news of communityNews">
-        <button class="accordion-toggle" (click)="news.open = !news.open">
+        <button class="accordion-toggle" (click)="toggleNews(news)">
           {{ news.headline }}
         </button>
         <div class="accordion-content" *ngIf="news.open">
