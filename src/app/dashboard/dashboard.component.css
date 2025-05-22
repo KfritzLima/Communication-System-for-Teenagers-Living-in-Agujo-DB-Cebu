@@ -38,11 +38,13 @@ body {
 .header-controls .icon {
   font-size: 20px;
   cursor: pointer;
+  user-select: none;
 }
 
 /* Notification dropdown */
 .notification-wrapper {
   position: relative;
+  cursor: pointer;
 }
 
 .notifications-dropdown {
@@ -53,7 +55,7 @@ body {
   color: #333;
   border: 1px solid #ccc;
   border-radius: 8px;
-  width: 220px;
+  width: 250px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   padding: 10px;
   z-index: 100;
@@ -73,6 +75,16 @@ body {
 
 .notifications-dropdown li:last-child {
   border-bottom: none;
+}
+
+.notification-message {
+  font-size: 14px;
+}
+
+.notif-timestamp {
+  font-size: 12px;
+  color: #888;
+  margin-top: 2px;
 }
 
 /* Logout button */
@@ -204,9 +216,4 @@ body {
 
 .comment strong {
   color: #6b46c1;
-}
-.icon {
-  font-size: 20px;
-  cursor: pointer; /* Add this line */
-  user-select: none; /* Optional: Prevents text selection */
 }

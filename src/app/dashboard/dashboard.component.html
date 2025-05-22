@@ -8,9 +8,10 @@
         <span class="icon" (click)="toggleNotifications()">🔔</span>
         <div class="notifications-dropdown" *ngIf="showNotifications">
           <p *ngIf="notifications.length === 0">No new notifications</p>
-          <ul>
+          <ul *ngIf="notifications.length > 0">
             <li *ngFor="let notification of notifications">
-              {{ notification }}
+              <div class="notification-message">{{ notification.message }}</div>
+              <div class="notif-timestamp">{{ notification.timestamp | date:'short' }}</div>
             </li>
           </ul>
         </div>

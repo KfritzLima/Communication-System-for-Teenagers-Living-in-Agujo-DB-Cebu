@@ -15,9 +15,16 @@ export class DashboardComponent {
   newPost: string = '';
   showNotifications: boolean = false;
 
-  notifications: string[] = [
-    'Lyle Condes posted: Hello Agujo!!',
-    'Someone commented on your post'
+  // Updated to include message and timestamp
+  notifications: { message: string; timestamp: Date }[] = [
+    {
+      message: 'Lyle Condes posted: Hello Agujo!!',
+      timestamp: new Date()
+    },
+    {
+      message: 'Someone commented on your post',
+      timestamp: new Date()
+    }
   ];
 
   posts: {
@@ -37,7 +44,7 @@ export class DashboardComponent {
 
     this.fullName = localStorage.getItem('userFullName') || 'User';
 
-    // ✅ Preloaded post from Lyle Condes
+    // Preloaded post from Lyle Condes
     this.posts.push({
       author: 'Lyle Condes',
       content: 'Hello Agujo!!',
@@ -54,6 +61,13 @@ export class DashboardComponent {
         comments: [],
         newComment: ''
       });
+
+      // Add notification with timestamp
+      this.notifications.unshift({
+        message: `${this.fullName} posted: ${this.newPost}`,
+        timestamp: new Date()
+      });
+
       this.newPost = '';
     }
   }
@@ -64,6 +78,13 @@ export class DashboardComponent {
         author: this.fullName || 'User',
         text: post.newComment
       });
+
+      // Add notification with timestamp
+      this.notifications.unshift({
+        message: `${this.fullName} commented on a post`,
+        timestamp: new Date()
+      });
+
       post.newComment = '';
     }
   }
