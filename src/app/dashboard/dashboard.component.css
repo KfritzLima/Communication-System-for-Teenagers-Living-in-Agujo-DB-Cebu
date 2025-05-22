@@ -1,159 +1,135 @@
-.dashboard-container {
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(145deg, #f5f0ff, #eae0f8);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+/* dashboard.component.css */
+
+:host {
+  display: block;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f0fa;
+  padding: 10px;
 }
 
-/* Navbar */
 .navbar {
-  background: #5e2a84;
-  color: white;
-  padding: 1rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  flex-wrap: wrap;
+  background-color: #5a189a;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 10px;
 }
 
-.logo {
-  font-size: 1.6rem;
+.navbar-left {
+  font-size: 1.2rem;
   font-weight: bold;
 }
 
-.nav-icons button {
-  margin-left: 1rem;
-  color: white;
-}
-
-/* Main content layout */
-.content {
+.navbar-right {
   display: flex;
-  flex: 1;
-  padding: 2rem;
-  gap: 2rem;
+  align-items: center;
+  gap: 10px;
 }
 
-/* Sidebars */
-.sidebar {
-  width: 250px;
-  background: white;
-  border-radius: 16px;
-  padding: 1.5rem;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+.navbar-right .icon {
+  font-size: 1.2rem;
+  cursor: pointer;
 }
 
-.sidebar.right {
-  background: #faf5ff;
+.logout-button {
+  background-color: transparent;
+  color: white;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
 }
 
-/* Profile */
-.profile-card {
+.profile-section {
   text-align: center;
+  margin: 20px 0;
 }
 
-.profile-card img {
+.profile-section img {
   width: 80px;
   height: 80px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid #a46edb;
-  margin-bottom: 1rem;
+  border: 2px solid #5a189a;
 }
 
-/* Feed */
-.feed {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+.welcome-text {
+  font-size: 1.3rem;
+  margin: 10px 0;
+  font-weight: 600;
 }
 
-/* Post Box */
-.post-box {
-  background: white;
-  padding: 1rem;
-  border-radius: 16px;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+.post-box, .post-card, .notifications {
+  background-color: white;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 15px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.post-box textarea {
+textarea {
   width: 100%;
+  resize: none;
   height: 80px;
-  padding: 0.8rem;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+
+button {
+  background-color: #7b2cbf;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.post-author {
+  font-weight: bold;
+  color: #5a189a;
+}
+
+.comment-author {
+  font-weight: bold;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 8px;
   border-radius: 8px;
   border: 1px solid #ccc;
-  resize: none;
-  margin-bottom: 0.5rem;
-  font-size: 16px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
-/* Post */
-.post {
-  background: white;
-  padding: 1rem;
-  border-radius: 16px;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+.notifications ul {
+  padding-left: 20px;
 }
 
-.post-header {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 0.5rem;
-  color: #5e2a84;
-}
-
-/* Comments */
-.comments {
-  margin-top: 1rem;
-  border-top: 1px solid #eee;
-  padding-top: 0.5rem;
-}
-
-.comments input {
-  width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  margin-top: 0.5rem;
-}
-
-/* Mobile responsiveness */
-@media (max-width: 768px) {
-  .content {
-    flex-direction: column;
-    padding: 1rem;
-    gap: 1rem;
+@media screen and (max-width: 600px) {
+  .navbar-left {
+    font-size: 1rem;
   }
 
-  .sidebar {
-    width: 100%;
-    padding: 1rem;
+  .navbar-right .icon,
+  .logout-button {
+    font-size: 0.9rem;
   }
 
-  .feed {
-    width: 100%;
+  .post-box, .post-card, .notifications {
+    padding: 12px;
   }
 
-  .navbar {
-    flex-direction: column;
-    align-items: flex-start;
+  textarea, input[type="text"] {
+    font-size: 0.95rem;
   }
 
-  .logo {
-    font-size: 1.3rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .nav-icons button {
-    margin-left: 0;
-    margin-right: 1rem;
-  }
-
-  .post-box textarea,
-  .comments input {
-    font-size: 14px;
+  .welcome-text {
+    font-size: 1.1rem;
   }
 }
