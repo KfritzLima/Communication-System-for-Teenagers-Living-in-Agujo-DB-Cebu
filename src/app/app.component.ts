@@ -4,7 +4,10 @@ import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterModule],  // <-- just RouterModule here, no forRoot()
-  template: `<router-outlet></router-outlet>`,
+  imports: [RouterModule],
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
 })
-export class AppComponent {}
+export class AppComponent { 
+    
+}

@@ -1,100 +1,203 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+
+interface Notification {
+  message: string;
+  timestamp: Date;
+}
+
+interface Comment {
+  author: string;
+  text: string;
+}
+
+interface Reactions {
+  love: number;
+  laugh: number;
+  fire: number;
+}
+
+interface Post {
+  author: string;
+  profileImage?: string | null;
+  content: string;
+  comments: Comment[];
+  newComment: string;
+  likes: number;
+  reactions: Reactions;
+  sharedCount: number;
+  userReaction?: keyof Reactions;
+  userLiked?: boolean;
+  timestamp: Date;
+}
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  styleUrls: ['./dashboard.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
-export class DashboardComponent {
-  fullName: string | null = '';
+export class DashboardComponent implements OnInit {
+  fullName: string = '';
+  userProfileImage: string = '';
+
   newPost: string = '';
   showNotifications: boolean = false;
+  showMenu: boolean = false;
+  welcomeVisible: boolean = true;
 
-  // Updated to include message and timestamp
-  notifications: { message: string; timestamp: Date }[] = [
-    {
-      message: 'Lyle Condes posted: Hello Agujo!!',
-      timestamp: new Date()
-    },
-    {
-      message: 'Someone commented on your post',
-      timestamp: new Date()
-    }
-  ];
-
-  posts: {
-    author: string;
-    content: string;
-    comments: { author: string; text: string }[];
-    newComment: string;
-  }[] = [];
+  notifications: Notification[] = [];
+  posts: Post[] = [];
 
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-    const isLoggedIn = localStorage.getItem('isLoggedIn');
-    if (isLoggedIn !== 'true') {
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+
+    if (!isLoggedIn) {
       this.router.navigate(['/login']);
+      return;
     }
 
-    this.fullName = localStorage.getItem('userFullName') || 'User';
+    this.fullName = localStorage.getItem('userFullName') ?? 'User';
+    this.userProfileImage = localStorage.getItem('userProfileImage')?.trim() || 'assets/user.webp';
 
-    // Preloaded post from Lyle Condes
+    setTimeout(() => {
+      this.welcomeVisible = false;
+    }, 3000);
+
+    this.addSamplePost();
+  }
+
+  private addSamplePost(): void {
     this.posts.push({
       author: 'Lyle Condes',
+      profileImage: 'assets/user.webp',
       content: 'Hello Agujo!!',
       comments: [],
-      newComment: ''
+      newComment: '',
+      likes: 0,
+      reactions: { love: 0, laugh: 0, fire: 0 },
+      sharedCount: 0,
+      timestamp: new Date()
+    });
+
+    this.notifications.push({
+      message: 'Lyle Condes posted: Hello Agujo!!',
+      timestamp: new Date()
     });
   }
 
   addPost(): void {
-    if (this.newPost.trim()) {
-      this.posts.unshift({
-        author: this.fullName || 'User',
-        content: this.newPost,
-        comments: [],
-        newComment: ''
-      });
+    const content = this.newPost.trim();
+    if (!content) return;
 
-      // Add notification with timestamp
+    this.posts.unshift({
+      author: this.fullName,
+      profileImage: this.userProfileImage,
+      content,
+      comments: [],
+      newComment: '',
+      likes: 0,
+      reactions: { love: 0, laugh: 0, fire: 0 },
+      sharedCount: 0,
+      timestamp: new Date()
+    });
+
+    this.notifications.unshift({
+      message: `${this.fullName} posted: ${content}`,
+      timestamp: new Date()
+    });
+
+    this.newPost = '';
+  }
+
+  addComment(post: Post): void {
+    const text = post.newComment.trim();
+    if (!text) return;
+
+    post.comments.push({ author: this.fullName, text });
+    this.notifications.unshift({
+      message: `${this.fullName} commented on a post`,
+      timestamp: new Date()
+    });
+
+    post.newComment = '';
+  }
+
+  toggleLike(post: Post): void {
+    post.userLiked = !post.userLiked;
+    post.likes += post.userLiked ? 1 : -1;
+
+    this.notifications.unshift({
+      message: `${this.fullName} ${post.userLiked ? 'liked' : 'unliked'} a post by ${post.author}`,
+      timestamp: new Date()
+    });
+  }
+
+  reactToPost(post: Post, type: keyof Reactions): void {
+    if (post.userReaction === type) {
+      post.reactions[type]--;
+      post.userReaction = undefined;
+
       this.notifications.unshift({
-        message: `${this.fullName} posted: ${this.newPost}`,
+        message: `${this.fullName} removed their ${type} reaction from a post by ${post.author}`,
         timestamp: new Date()
       });
+    } else {
+      if (post.userReaction) {
+        post.reactions[post.userReaction]--;
+      }
 
-      this.newPost = '';
+      post.reactions[type]++;
+      post.userReaction = type;
+
+      this.notifications.unshift({
+        message: `${this.fullName} reacted (${type}) to a post by ${post.author}`,
+        timestamp: new Date()
+      });
     }
   }
 
-  addComment(post: any): void {
-    if (post.newComment && post.newComment.trim()) {
-      post.comments.push({
-        author: this.fullName || 'User',
-        text: post.newComment
-      });
+  sharePost(post: Post): void {
+    post.sharedCount++;
 
-      // Add notification with timestamp
-      this.notifications.unshift({
-        message: `${this.fullName} commented on a post`,
-        timestamp: new Date()
-      });
+    this.notifications.unshift({
+      message: `${this.fullName} shared a post by ${post.author}`,
+      timestamp: new Date()
+    });
 
-      post.newComment = '';
-    }
+    alert(`Post by ${post.author} shared!`);
   }
 
   toggleNotifications(): void {
     this.showNotifications = !this.showNotifications;
+    this.showMenu = false;
+  }
+
+  toggleMenu(): void {
+    this.showMenu = !this.showMenu;
+    this.showNotifications = false;
+  }
+
+  goToProfile(): void {
+    this.router.navigate(['/profile']);
+  }
+
+  goToSettings(): void {
+    this.router.navigate(['/settings']);
+  }
+
+  goToAbout(): void {
+    alert("This is a Facebook-style forum UI built with Angular.");
   }
 
   logout(): void {
-    localStorage.removeItem('isLoggedIn');
+    localStorage.clear();
     this.router.navigate(['/login']);
   }
 }

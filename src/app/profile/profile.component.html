@@ -1,0 +1,145 @@
+<!-- Font Awesome for Icons -->
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+/>
+
+<header class="forum-header">
+  <!-- Logo -->
+  <img
+    src="assets/images/logo-light-transparent.png"
+    alt="Agujo Forum Logo"
+    class="logo-image"
+  />
+
+  <!-- Center Navigation -->
+  <div class="header-center">
+    <a (click)="goToDashboard()"><i class="fas fa-house"></i></a>
+    <a href="#"><i class="fas fa-users"></i></a>
+    <a href="#" (click)="toggleNotifications()">
+      <i class="fas fa-bell"></i>
+    </a>
+  </div>
+
+  <!-- Right Side Profile Menu -->
+  <div class="header-right">
+    <img
+      [src]="userProfileImage || 'assets/images/default-user.webp'"
+      alt="Profile"
+      class="profile-pic"
+      (click)="toggleMenu()"
+      tabindex="0"
+    />
+
+    <!-- Dropdown Menu -->
+    <div class="menu-dropdown" *ngIf="showMenu">
+      <button (click)="goToProfile()">
+        <i class="fas fa-user"></i> Profile
+      </button>
+      <button (click)="goToSettings()">
+        <i class="fas fa-cog"></i> Settings
+      </button>
+      <button class="logout-btn" (click)="logout()">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Profile Content -->
+<div class="profile-wrapper">
+  <!-- Cover -->
+  <div class="cover-photo">
+    <ng-container *ngIf="coverPhoto && coverPhoto.trim() !== ''; else noCover">
+      <img [src]="coverPhoto" alt="Cover Photo" class="cover-img" />
+    </ng-container>
+    <ng-template #noCover>
+      <div class="cover-placeholder">
+        <i class="fas fa-image"></i>
+        <p>Add cover photo</p>
+      </div>
+    </ng-template>
+    <label class="change-cover-btn">
+      <i class="fas fa-camera"></i> Change Cover
+      <input type="file" accept="image/*" hidden (change)="updateCoverPhoto($event)" />
+    </label>
+  </div>
+
+  <!-- Profile Info -->
+  <div class="profile-info">
+    <div class="profile-img-wrapper">
+      <ng-container *ngIf="profileImage && profileImage.trim() !== ''; else noProfile">
+        <img [src]="profileImage" alt="Profile Picture" class="profile-img" />
+      </ng-container>
+      <ng-template #noProfile>
+        <div class="profile-placeholder">
+          <i class="fas fa-user-circle"></i>
+          <p>Add profile picture</p>
+        </div>
+      </ng-template>
+      <label class="change-profile-btn">
+        <i class="fas fa-camera"></i>
+        <input type="file" accept="image/*" hidden (change)="updateProfilePhoto($event)" />
+      </label>
+    </div>
+
+    <h2 class="username">{{ fullName }}</h2>
+    <p class="bio">{{ bio }}</p>
+  </div>
+
+  <!-- Tabs -->
+  <div class="profile-tabs">
+    <button class="tab-btn" [class.active]="activeTab === 'posts'" (click)="switchTab('posts')">
+      Posts
+    </button>
+    <button class="tab-btn" [class.active]="activeTab === 'photos'" (click)="switchTab('photos')">
+      Photos
+    </button>
+  </div>
+
+  <!-- Tab Content -->
+  <div class="tab-content" *ngIf="activeTab === 'posts'">
+    <div class="post-composer">
+      <textarea [(ngModel)]="newPostContent" placeholder="What's on your mind?" rows="3"></textarea>
+      <div class="composer-actions">
+        <input type="file" accept="image/*" hidden #postImageInput (change)="handlePostImage($event)" />
+        <button class="upload-label" (click)="postImageInput.click()">
+          <i class="fas fa-image"></i> Add Photo
+        </button>
+        <button class="submit-post-btn" (click)="submitPost()">
+          <i class="fas fa-paper-plane"></i> Post
+        </button>
+      </div>
+    </div>
+
+    <div class="post-card" *ngFor="let post of posts">
+      <div class="post-header">
+        <img [src]="profileImage || 'assets/user.webp'" alt="User" class="post-profile-img" />
+        <div>
+          <strong>{{ fullName }}</strong>
+          <p class="timestamp">{{ post.timestamp | date:'short' }}</p>
+        </div>
+      </div>
+      <p class="post-content">{{ post.content }}</p>
+      <img *ngIf="post.image" [src]="post.image" class="photo-img" alt="Post image" />
+    </div>
+
+    <p *ngIf="posts.length === 0" class="empty-state">No posts yet.</p>
+  </div>
+
+  <div class="tab-content" *ngIf="activeTab === 'photos'">
+    <label class="upload-label">
+      <i class="fas fa-upload"></i> Upload Photo
+      <input type="file" (change)="handlePhotoUpload($event)" accept="image/*" hidden />
+    </label>
+
+    <div class="photo-grid">
+      <div class="photo-card" *ngFor="let photo of photos">
+        <img [src]="photo.url" alt="Photo" class="photo-img" />
+        <p class="photo-caption">{{ photo.caption }}</p>
+      </div>
+    </div>
+
+    <p *ngIf="photos.length === 0" class="empty-state">No photos uploaded.</p>
+  </div>
+</div>
