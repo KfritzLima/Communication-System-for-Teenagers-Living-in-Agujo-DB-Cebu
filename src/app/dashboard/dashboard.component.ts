@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { NotificationService } from '../services/notification.service';
 
 interface Notification {
   message: string;
@@ -32,7 +33,9 @@ interface Post {
   userLiked?: boolean;
   timestamp: Date;
   image?: string;
-  location?: string; // ✅ Added this property
+  location?: string;
+  sharedFrom?: Post;
+  showMenu?: boolean; // for 3-dot menu toggle
 }
 
 @Component({
@@ -41,7 +44,7 @@ interface Post {
   imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None
 })
 export class DashboardComponent implements OnInit {
   fullName = '';
@@ -57,7 +60,14 @@ export class DashboardComponent implements OnInit {
   postImagePreview: string | null = null;
   postImageFile: File | null = null;
 
-  constructor(private router: Router) {}
+  shareModalVisible = false;
+  selectedPost: Post | null = null;
+  shareComment = '';
+
+  constructor(
+    private router: Router,
+    private notificationService: NotificationService
+  ) {}
 
   ngOnInit(): void {
     const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
@@ -76,10 +86,17 @@ export class DashboardComponent implements OnInit {
       this.posts = JSON.parse(savedPosts).map((post: any) => ({
         ...post,
         timestamp: new Date(post.timestamp),
+        sharedFrom: post.sharedFrom
+          ? { ...post.sharedFrom, timestamp: new Date(post.sharedFrom.timestamp) }
+          : undefined
       }));
     } else {
       this.addSamplePost();
     }
+
+    this.notificationService.notifications$.subscribe(notifs => {
+      this.notifications = notifs;
+    });
 
     document.addEventListener('click', this.handleOutsideClick.bind(this));
   }
@@ -95,15 +112,11 @@ export class DashboardComponent implements OnInit {
       reactions: { love: 0, laugh: 0, fire: 0 },
       sharedCount: 0,
       timestamp: new Date(),
-      location: 'Agujo, Daanbantayan, Cebu', // ✅ Added sample location
+      location: 'Agujo, Daanbantayan, Cebu'
     };
 
     this.posts.unshift(sample);
-    this.notifications.unshift({
-      message: 'Lyle Condes posted: Hello Agujo!!',
-      timestamp: new Date(),
-    });
-
+    this.notificationService.addNotification('Lyle Condes posted: Hello Agujo!!');
     this.savePosts();
   }
 
@@ -122,19 +135,16 @@ export class DashboardComponent implements OnInit {
       sharedCount: 0,
       timestamp: new Date(),
       image: this.postImagePreview || undefined,
-      location: 'Agujo, Cebu', // ✅ Default location for new posts (optional)
+      location: 'Agujo, Cebu'
     };
 
     this.posts.unshift(newPost);
-    this.savePosts();
-
-    this.notifications.unshift({
-      message: `${this.fullName} posted: ${content || 'a photo'}`,
-      timestamp: new Date(),
-    });
+    this.notificationService.addNotification(`${this.fullName} posted: ${content || 'a photo'}`);
+    this.showToast('Post submitted!');
 
     this.newPost = '';
     this.removePostImage();
+    this.savePosts();
   }
 
   handlePostImage(event: Event): void {
@@ -160,12 +170,8 @@ export class DashboardComponent implements OnInit {
 
     post.comments.push({ author: this.fullName, text });
     post.newComment = '';
-
-    this.notifications.unshift({
-      message: `${this.fullName} commented on a post`,
-      timestamp: new Date(),
-    });
-
+    this.notificationService.addNotification(`${this.fullName} commented on a post`);
+    this.showToast('Comment added!');
     this.savePosts();
   }
 
@@ -173,11 +179,10 @@ export class DashboardComponent implements OnInit {
     post.userLiked = !post.userLiked;
     post.likes += post.userLiked ? 1 : -1;
 
-    this.notifications.unshift({
-      message: `${this.fullName} ${post.userLiked ? 'liked' : 'unliked'} a post by ${post.author}`,
-      timestamp: new Date(),
-    });
-
+    this.notificationService.addNotification(
+      `${this.fullName} ${post.userLiked ? 'liked' : 'unliked'} a post by ${post.author}`
+    );
+    this.showToast(post.userLiked ? 'You liked this post!' : 'Like removed');
     this.savePosts();
   }
 
@@ -185,41 +190,89 @@ export class DashboardComponent implements OnInit {
     if (post.userReaction === type) {
       post.reactions[type]--;
       post.userReaction = undefined;
-
-      this.notifications.unshift({
-        message: `${this.fullName} removed their ${type} reaction from a post by ${post.author}`,
-        timestamp: new Date(),
-      });
+      this.notificationService.addNotification(
+        `${this.fullName} removed their ${type} reaction from a post by ${post.author}`
+      );
+      this.showToast('Reaction removed');
     } else {
-      if (post.userReaction) post.reactions[post.userReaction]--;
+      if (post.userReaction) {
+        post.reactions[post.userReaction]--;
+      }
       post.reactions[type]++;
       post.userReaction = type;
-
-      this.notifications.unshift({
-        message: `${this.fullName} reacted (${type}) to a post by ${post.author}`,
-        timestamp: new Date(),
-      });
+      this.notificationService.addNotification(
+        `${this.fullName} reacted (${type}) to a post by ${post.author}`
+      );
+      this.showToast(`You reacted with ${type}`);
     }
-
     this.savePosts();
   }
 
-  sharePost(post: Post): void {
-    post.sharedCount++;
+  openShareModal(post: Post): void {
+    this.selectedPost = post;
+    this.shareModalVisible = true;
+    this.shareComment = '';
+  }
 
-    this.notifications.unshift({
-      message: `${this.fullName} shared a post by ${post.author}`,
+  closeShareModal(): void {
+    this.selectedPost = null;
+    this.shareModalVisible = false;
+    this.shareComment = '';
+  }
+
+  shareNow(): void {
+    if (!this.selectedPost) return;
+
+    const sharedPost: Post = {
+      author: this.fullName,
+      profileImage: this.userProfileImage,
+      content: this.shareComment.trim(),
+      comments: [],
+      newComment: '',
+      likes: 0,
+      reactions: { love: 0, laugh: 0, fire: 0 },
+      sharedCount: 0,
       timestamp: new Date(),
-    });
+      sharedFrom: this.selectedPost
+    };
 
-    alert(`Post by ${post.author} shared!`);
+    this.selectedPost.sharedCount++;
+    this.posts.unshift(sharedPost);
+    this.notificationService.addNotification(
+      `${this.fullName} shared a post by ${this.selectedPost.author}`
+    );
+    this.showToast('Post shared!');
     this.savePosts();
+    this.closeShareModal();
+  }
+
+  // NEW — 3-dot post menu toggle
+  togglePostMenu(post: Post): void {
+    this.posts.forEach(p => {
+      if (p !== post) p.showMenu = false;
+    });
+    post.showMenu = !post.showMenu;
+  }
+
+  // NEW — Delete post method
+  deletePost(postToDelete: Post): void {
+    const confirmDelete = confirm('Are you sure you want to delete this post?');
+    if (!confirmDelete) return;
+
+    this.posts = this.posts.filter(post => post !== postToDelete);
+    this.savePosts();
+    this.notificationService.addNotification(`${this.fullName} deleted a post.`);
+    this.showToast('Post deleted!');
   }
 
   toggleNotifications(event: Event): void {
     event.preventDefault();
     this.showNotifications = !this.showNotifications;
     this.showMenu = false;
+  }
+
+  closeNotifications(): void {
+    this.showNotifications = false;
   }
 
   toggleMenu(): void {
@@ -261,5 +314,18 @@ export class DashboardComponent implements OnInit {
 
   private savePosts(): void {
     localStorage.setItem('posts', JSON.stringify(this.posts));
+  }
+
+  private showToast(message: string): void {
+    const toast = document.createElement('div');
+    toast.className = 'floating-notification show';
+    toast.textContent = message;
+
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+      toast.classList.remove('show');
+      setTimeout(() => toast.remove(), 300);
+    }, 3000);
   }
 }

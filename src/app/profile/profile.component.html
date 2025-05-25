@@ -10,9 +10,17 @@
 
   <div class="header-center">
     <a (click)="goToDashboard()"><i class="fas fa-house"></i></a>
-    <a href="#" title="Notifications" (click)="toggleNotifications($event)">
-        <i class="fas fa-bell nav-icon"></i>
-      </a>
+
+    <!-- Notification Icon Wrapper with Badge -->
+    <a
+      href="#"
+      title="Notifications"
+      class="notif-icon-wrapper"
+      (click)="toggleNotifications($event)"
+    >
+      <i class="fas fa-bell nav-icon"></i>
+      <span *ngIf="notifications.length > 0" class="notif-badge">{{ notifications.length }}</span>
+    </a>
   </div>
 
   <div class="header-right">
@@ -31,9 +39,25 @@
   </div>
 </header>
 
+<!-- Notifications Dropdown -->
+<div class="notifications-dropdown" *ngIf="showNotifications">
+  <div class="notification-header">
+    <strong>Notifications</strong>
+    <button (click)="closeNotifications()" class="close-btn">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <p *ngIf="notifications.length === 0">No new notifications</p>
+  <ul *ngIf="notifications.length > 0">
+    <li *ngFor="let notification of notifications">
+      <div class="notification-message">{{ notification.message }}</div>
+      <div class="notif-timestamp">{{ notification.timestamp | date: 'short' }}</div>
+    </li>
+  </ul>
+</div>
+
 <!-- Profile Page -->
 <div class="profile-wrapper">
-
   <!-- Cover Photo -->
   <div class="cover-photo">
     <ng-container *ngIf="(coverPhoto || '').trim() !== ''; else noCover">
@@ -55,7 +79,7 @@
   <div class="profile-info">
     <div class="profile-img-wrapper">
       <ng-container *ngIf="(profileImage || '').trim() !== ''; else noProfile">
-        <img [src]="profileImage" alt="Profile Picture" class="profile-img" />
+        <img [src]="profileImage" alt="Menu" class="profile-img" />
       </ng-container>
       <ng-template #noProfile>
         <div class="profile-placeholder">
@@ -81,7 +105,6 @@
 
   <!-- Posts Tab -->
   <div class="tab-content" *ngIf="activeTab === 'posts'">
-
     <!-- Post Input -->
     <div class="post-input">
       <img
@@ -89,28 +112,24 @@
         alt="Your Profile"
         class="profile-pic"
       />
-
       <div class="post-content-box">
         <div class="input-row">
           <label class="upload-photo" title="Attach Photo">
             <i class="fas fa-camera"></i>
             <input type="file" accept="image/*" (change)="handlePostImage($event)" hidden />
           </label>
-
           <textarea
             [(ngModel)]="newPost"
             maxlength="280"
             placeholder="What's on your mind? (Max 280 characters)"
           ></textarea>
         </div>
-
         <div class="image-preview" *ngIf="postImagePreview">
           <img [src]="postImagePreview" alt="Post Preview" />
           <button class="remove-image" (click)="removePostImage()" title="Remove Image">
             <i class="fas fa-times-circle"></i>
           </button>
         </div>
-
         <button class="post-btn" (click)="submitPost()">Post</button>
       </div>
     </div>
@@ -123,31 +142,36 @@
           <strong>{{ fullName }}</strong>
           <p class="timestamp">{{ post.timestamp | date: 'short' }}</p>
         </div>
+
+        <!-- Delete dropdown for own posts -->
+        <div *ngIf="post.author === fullName" class="post-menu-wrapper">
+          <button class="post-menu-btn" (click)="togglePostMenu(post)">
+            <i class="fas fa-ellipsis-v"></i>
+          </button>
+          <div class="post-menu-dropdown" *ngIf="post.showMenu">
+            <button (click)="deletePost(post)">Delete</button>
+          </div>
+        </div>
       </div>
 
       <p class="post-content">{{ post.content }}</p>
-
       <img *ngIf="post.image" [src]="post.image" class="photo-img" alt="Post image" />
 
-      <!-- Post Actions (inside *ngFor) -->
+      <!-- Post Actions -->
       <div class="post-actions">
         <button (click)="toggleLike(post)">
           <i class="fa fa-thumbs-up" [class.active]="post.userLiked"></i>
           <span>{{ post.likes }}</span>
         </button>
-
         <button (click)="reactToPost(post, 'love')" [class.active]="post.userReaction === 'love'">
           ❤️ <span>{{ post.reactions.love }}</span>
         </button>
-
         <button (click)="reactToPost(post, 'laugh')" [class.active]="post.userReaction === 'laugh'">
           😂 <span>{{ post.reactions.laugh }}</span>
         </button>
-
         <button (click)="reactToPost(post, 'fire')" [class.active]="post.userReaction === 'fire'">
           🔥 <span>{{ post.reactions.fire }}</span>
         </button>
-
         <button (click)="sharePost(post)">
           <i class="fa fa-share"></i> <span>{{ post.sharedCount }}</span>
         </button>
@@ -163,14 +187,12 @@
       <i class="fas fa-upload"></i> Upload Photo
       <input type="file" (change)="handlePhotoUpload($event)" accept="image/*" hidden />
     </label>
-
     <div class="photo-grid">
       <div class="photo-card" *ngFor="let photo of photos">
         <img [src]="photo.url" alt="Photo" class="photo-img" />
         <p class="photo-caption">{{ photo.caption }}</p>
       </div>
     </div>
-
     <p *ngIf="photos.length === 0" class="empty-state">No photos uploaded.</p>
   </div>
 </div>

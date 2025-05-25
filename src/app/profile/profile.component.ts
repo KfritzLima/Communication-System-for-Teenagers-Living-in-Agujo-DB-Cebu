@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
-
+interface Notification {
+  message: string;
+  timestamp: Date;
+}
 
 interface Comment {
   author: string;
@@ -31,6 +34,7 @@ interface Post {
   sharedCount: number;
   userReaction?: keyof Reactions;
   userLiked?: boolean;
+  showMenu?: boolean;
 }
 
 interface Photo {
@@ -46,7 +50,7 @@ interface Photo {
   styleUrls: ['./profile.component.css'],
   imports: [CommonModule, FormsModule, RouterModule],
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnDestroy {
   fullName = 'John Doe';
   bio = 'Passionate developer. Coffee lover. 🖤';
   profileImage = '';
@@ -62,11 +66,7 @@ export class ProfileComponent implements OnInit {
 
   posts: Post[] = [];
   photos: Photo[] = [];
-
-  notifications = [
-    { message: 'You have a new follower.', timestamp: new Date() },
-    { message: 'Someone liked your post.', timestamp: new Date() },
-  ];
+  notifications: Notification[] = [];
 
   constructor(private router: Router) {}
 
@@ -87,6 +87,7 @@ export class ProfileComponent implements OnInit {
         likes: post.likes ?? 0,
         reactions: post.reactions ?? { love: 0, laugh: 0, fire: 0 },
         sharedCount: post.sharedCount ?? 0,
+        showMenu: false
       })).filter((post: Post) => post.author === this.fullName);
     }
 
@@ -94,6 +95,20 @@ export class ProfileComponent implements OnInit {
     if (savedPhotos) {
       this.photos = JSON.parse(savedPhotos);
     }
+
+    const savedNotifications = localStorage.getItem('notifications');
+    if (savedNotifications) {
+      this.notifications = JSON.parse(savedNotifications).map((n: any) => ({
+        message: n.message,
+        timestamp: new Date(n.timestamp)
+      }));
+    }
+
+    document.addEventListener('click', this.handleOutsideClick);
+  }
+
+  ngOnDestroy(): void {
+    document.removeEventListener('click', this.handleOutsideClick);
   }
 
   get displayUserImage(): string {
@@ -106,9 +121,13 @@ export class ProfileComponent implements OnInit {
   }
 
   toggleNotifications(event: Event): void {
-    event.preventDefault(); // ✅ fixes error with $event
+    event.preventDefault();
     this.showNotifications = !this.showNotifications;
     this.showMenu = false;
+  }
+
+  closeNotifications(): void {
+    this.showNotifications = false;
   }
 
   goToDashboard(): void {
@@ -190,9 +209,11 @@ export class ProfileComponent implements OnInit {
       likes: 0,
       reactions: { love: 0, laugh: 0, fire: 0 },
       sharedCount: 0,
+      showMenu: false
     };
 
     this.posts.unshift(newPost);
+    this.addNotification(`${this.fullName} posted: ${content || 'a photo'}`);
     this.savePosts();
     this.newPost = '';
     this.postImagePreview = null;
@@ -221,12 +242,14 @@ export class ProfileComponent implements OnInit {
 
     post.comments.push({ author: this.fullName, text });
     post.newComment = '';
+    this.addNotification(`${this.fullName} commented on a post`);
     this.savePosts();
   }
 
   toggleLike(post: Post): void {
     post.userLiked = !post.userLiked;
     post.likes += post.userLiked ? 1 : -1;
+    this.addNotification(`${this.fullName} ${post.userLiked ? 'liked' : 'unliked'} a post`);
     this.savePosts();
   }
 
@@ -234,19 +257,44 @@ export class ProfileComponent implements OnInit {
     if (post.userReaction === type) {
       post.reactions[type]--;
       post.userReaction = undefined;
+      this.addNotification(`${this.fullName} removed their ${type} reaction`);
     } else {
       if (post.userReaction) post.reactions[post.userReaction]--;
       post.reactions[type]++;
       post.userReaction = type;
+      this.addNotification(`${this.fullName} reacted with ${type}`);
     }
     this.savePosts();
   }
 
   sharePost(post: Post): void {
     post.sharedCount++;
+    this.addNotification(`${this.fullName} shared a post`);
     this.savePosts();
     alert('Post shared!');
   }
+
+  togglePostMenu(post: Post): void {
+    this.posts.forEach(p => {
+      if (p !== post) p.showMenu = false;
+    });
+    post.showMenu = !post.showMenu;
+  }
+
+  deletePost(post: Post): void {
+    this.posts = this.posts.filter(p => p.id !== post.id);
+    this.addNotification(`${this.fullName} deleted a post`);
+    this.savePosts();
+  }
+
+  private handleOutsideClick = (event: MouseEvent) => {
+    const target = event.target as HTMLElement;
+    const isInside = target.closest('.post-menu-btn') || target.closest('.post-menu-dropdown');
+
+    if (!isInside) {
+      this.posts.forEach(p => p.showMenu = false);
+    }
+  };
 
   private savePosts(): void {
     const allPosts: Post[] = JSON.parse(localStorage.getItem('posts') || '[]');
@@ -254,6 +302,15 @@ export class ProfileComponent implements OnInit {
     const nonUserPosts = allPosts.filter(p => !updatedPostIds.includes(p.id));
     const mergedPosts = [...this.posts, ...nonUserPosts];
     localStorage.setItem('posts', JSON.stringify(mergedPosts));
+  }
+
+  private addNotification(message: string): void {
+    const notif: Notification = {
+      message,
+      timestamp: new Date()
+    };
+    this.notifications.unshift(notif);
+    localStorage.setItem('notifications', JSON.stringify(this.notifications));
   }
 
   private generateId(): string {

@@ -12,8 +12,9 @@
       <a href="#" title="Home" (click)="refreshPage($event)">
         <i class="fas fa-house nav-icon"></i>
       </a>
-      <a href="#" title="Notifications" (click)="toggleNotifications($event)">
+      <a href="#" title="Notifications" (click)="toggleNotifications($event)" class="notif-icon-wrapper">
         <i class="fas fa-bell nav-icon"></i>
+        <span class="notif-badge" *ngIf="notifications.length > 0">{{ notifications.length }}</span>
       </a>
     </nav>
 
@@ -29,8 +30,14 @@
     </div>
   </header>
 
-  <!-- Notifications -->
+  <!-- Notifications Dropdown -->
   <div class="notifications-dropdown" *ngIf="showNotifications">
+    <div class="notification-header">
+      <strong>Notifications</strong>
+      <button (click)="closeNotifications()" class="close-btn">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
     <p *ngIf="notifications.length === 0">No new notifications</p>
     <ul *ngIf="notifications.length > 0">
       <li *ngFor="let notification of notifications">
@@ -43,34 +50,27 @@
   <!-- Welcome Message -->
   <div class="welcome-msg" *ngIf="welcomeVisible">
     <i class="fas fa-hand-sparkles waving-icon"></i>
-    <span class="welcome-text">Welcome , {{ fullName }}!</span>
+    <span class="welcome-text">Welcome, {{ fullName }}!</span>
   </div>
 
-  <!-- ✅ Wrapped & Centered Post Input -->
+  <!-- Post Input -->
   <div class="post-input-wrapper">
     <div class="post-input" [ngClass]="{ 'with-photo': postImagePreview }">
-      <img [src]="userProfileImage || 'assets/user.webp'" alt="Profile" class="profile-pic" />
-
+      <img [src]="userProfileImage || 'assets/user.webp'" alt="User Profile" class="profile-pic" />
       <div class="post-content-box">
         <div class="input-row">
           <label class="upload-photo" title="Attach Photo">
             <i class="fas fa-camera"></i>
             <input type="file" accept="image/*" (change)="handlePostImage($event)" />
           </label>
-          <textarea
-            [(ngModel)]="newPost"
-            maxlength="280"
-            placeholder="What's on your mind? (Max 280 characters)"
-          ></textarea>
+          <textarea [(ngModel)]="newPost" maxlength="280" placeholder="What's on your mind? (Max 280 characters)"></textarea>
         </div>
-
         <div class="image-preview" *ngIf="postImagePreview">
           <img [src]="postImagePreview" alt="Post Preview" />
           <button class="remove-image" (click)="removePostImage()" title="Remove Image">
             <i class="fas fa-times-circle"></i>
           </button>
         </div>
-
         <button class="post-btn" (click)="submitPost()">Post</button>
       </div>
     </div>
@@ -87,41 +87,82 @@
           <strong>{{ post.author }}</strong><br />
           <span class="timestamp">{{ post.timestamp | date: 'short' }}</span>
         </div>
+
+        <!-- 3-dot delete menu for current user only -->
+        <div *ngIf="post.author === fullName" class="post-menu-wrapper">
+          <button class="post-menu-btn" (click)="togglePostMenu(post)">
+            <i class="fas fa-ellipsis-v"></i>
+          </button>
+          <div class="post-menu-dropdown" *ngIf="post.showMenu">
+            <button (click)="deletePost(post)">Delete</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Shared Post Preview -->
+      <div class="shared-post" *ngIf="post.sharedFrom">
+        <small>Shared from <strong>{{ post.sharedFrom.author }}</strong>:</small>
+        <p>{{ post.sharedFrom.content }}</p>
+        <img *ngIf="post.sharedFrom.image" [src]="post.sharedFrom.image" class="shared-image" />
       </div>
 
       <p class="post-location" *ngIf="post.location">Location: {{ post.location }}</p>
       <img *ngIf="post.image" [src]="post.image" class="post-image" alt="Post image" />
       <p class="post-content">{{ post.content }}</p>
 
-      <div class="post-actions">
-        <button [class.active]="post.userLiked" (click)="toggleLike(post)">
-          <i class="fas fa-thumbs-up"></i> {{ post.likes }}
-        </button>
-        <button [class.active]="post.userReaction === 'love'" (click)="reactToPost(post, 'love')">
-          ❤️ {{ post.reactions.love }}
-        </button>
-        <button [class.active]="post.userReaction === 'laugh'" (click)="reactToPost(post, 'laugh')">
-          😂 {{ post.reactions.laugh }}
-        </button>
-        <button [class.active]="post.userReaction === 'fire'" (click)="reactToPost(post, 'fire')">
-          🔥 {{ post.reactions.fire }}
-        </button>
-        <button (click)="sharePost(post)">
+      <!-- Reactions -->
+      <div class="post-actions reactions">
+        <div class="reaction" [class.active]="post.userLiked" (click)="toggleLike(post)">
+          <i class="fas fa-thumbs-up"></i><span class="count">{{ post.likes }}</span>
+        </div>
+        <div class="reaction" [class.active]="post.userReaction === 'love'" (click)="reactToPost(post, 'love')">
+          ❤️ <span class="count">{{ post.reactions.love }}</span>
+        </div>
+        <div class="reaction" [class.active]="post.userReaction === 'laugh'" (click)="reactToPost(post, 'laugh')">
+          😂 <span class="count">{{ post.reactions.laugh }}</span>
+        </div>
+        <div class="reaction" [class.active]="post.userReaction === 'fire'" (click)="reactToPost(post, 'fire')">
+          🔥 <span class="count">{{ post.reactions.fire }}</span>
+        </div>
+        <div class="reaction" (click)="openShareModal(post)">
           <i class="fas fa-share"></i>
-          <span *ngIf="post.sharedCount">({{ post.sharedCount }})</span>
-        </button>
+          <span class="count">({{ post.sharedCount || 0 }})</span>
+        </div>
       </div>
 
+      <!-- Comments -->
       <div class="comment-box">
         <input [(ngModel)]="post.newComment" placeholder="Write a comment..." class="comment-input" />
         <button class="comment-btn" (click)="addComment(post)">Comment</button>
-
         <div class="comments-list" *ngIf="post.comments?.length">
           <div class="comment" *ngFor="let comment of post.comments">
             <strong>{{ comment.author }}:</strong> {{ comment.text }}
           </div>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- Share Modal -->
+  <div class="share-modal" *ngIf="shareModalVisible && selectedPost">
+    <div class="modal-content">
+      <button class="close-btn" (click)="closeShareModal()">&times;</button>
+      <h3>Share Post</h3>
+
+      <div class="shared-post" *ngIf="selectedPost.sharedFrom">
+        <small>Shared from <strong>{{ selectedPost.sharedFrom.author }}</strong>:</small>
+        <p>{{ selectedPost.sharedFrom.content }}</p>
+        <img *ngIf="selectedPost.sharedFrom.image" [src]="selectedPost.sharedFrom.image" class="shared-image" />
+      </div>
+
+      <div class="shared-post" *ngIf="!selectedPost.sharedFrom">
+        <small>Original Post by <strong>{{ selectedPost.author }}</strong>:</small>
+        <p>{{ selectedPost.content }}</p>
+        <img *ngIf="selectedPost.image" [src]="selectedPost.image" class="shared-image" />
+      </div>
+
+      <textarea [(ngModel)]="shareComment" placeholder="Say something about this..."></textarea>
+      <button class="post-btn" (click)="shareNow()">Share Now</button>
     </div>
   </div>
 </div>

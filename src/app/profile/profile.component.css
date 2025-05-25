@@ -334,7 +334,8 @@ textarea:focus {
   margin-top: 10px;
   border-radius: 8px;
 }
-/* --- POST ACTION BUTTONS --- */
+
+/* Post Action Buttons */
 .post-actions {
   display: flex;
   gap: 12px;
@@ -359,7 +360,8 @@ textarea:focus {
   color: #6c35d2;
   font-weight: bold;
 }
-/* --- COMMENT BOX --- */
+
+/* Comment Box */
 textarea {
   width: 100%;
   min-height: 50px;
@@ -421,9 +423,145 @@ textarea {
   color: #888;
   margin-top: 2rem;
 }
+
 .post-image {
   max-width: 100%;
   height: auto;
   border-radius: 10px;
   margin-top: 10px;
+}
+/* Notification Badge */
+.notif-icon-wrapper {
+  position: relative;
+  display: inline-block;
+  margin-right: 1rem;
+}
+
+.notif-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background-color: red;
+  color: white;
+  font-size: 0.65rem;
+  padding: 2px 5px;
+  border-radius: 50%;
+}
+
+/* Notifications Dropdown */
+.notifications-dropdown {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  width: 300px;
+  max-height: 400px;
+  overflow-y: auto;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1002;
+  padding: 15px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Notification Header */
+.notifications-dropdown .notification-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Close Button */
+.notifications-dropdown .close-btn {
+  background: transparent;
+  border: none;
+  font-size: 16px;
+  color: #555;
+  cursor: pointer;
+}
+
+/* Empty State */
+.notifications-dropdown p {
+  color: #888;
+  text-align: center;
+  font-size: 14px;
+}
+
+/* Notification List */
+.notifications-dropdown ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.notifications-dropdown li {
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+/* Message & Timestamp */
+.notification-message {
+  font-size: 14px;
+  color: #333;
+}
+
+.notif-timestamp {
+  font-size: 12px;
+  color: #999;
+  margin-top: 4px;
+}
+/* Container for the post menu */
+.post-menu-wrapper {
+  position: relative;
+  margin-left: auto;
+}
+
+/* Three-dot button */
+.post-menu-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #666;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.post-menu-btn:hover {
+  color: #333;
+}
+
+/* Dropdown menu styling */
+.post-menu-dropdown {
+  position: absolute;
+  top: 25px;
+  right: 0;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  min-width: 120px;
+}
+
+.post-menu-dropdown button {
+  background: none;
+  border: none;
+  padding: 10px 16px;
+  width: 100%;
+  text-align: left;
+  font-size: 14px;
+  color: #1f1a1a;
+  cursor: pointer;
+}
+
+.post-menu-dropdown button:hover {
+  background-color: #f8d7da;
+}
+/* Prevent accidental text selection on triple click */
+.post-menu-btn,
+.post-menu-dropdown {
+  user-select: none;
 }
