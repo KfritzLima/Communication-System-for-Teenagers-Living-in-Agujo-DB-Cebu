@@ -1,27 +1,20 @@
-<!-- Font Awesome for Icons -->
+<!-- Font Awesome -->
 <link
   rel="stylesheet"
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 />
 
+<!-- Header -->
 <header class="forum-header">
-  <!-- Logo -->
-  <img
-    src="assets/images/logo-light-transparent.png"
-    alt="Agujo Forum Logo"
-    class="logo-image"
-  />
+  <img src="assets/images/logo-light-transparent.png" alt="Agujo Forum Logo" class="logo-image" />
 
-  <!-- Center Navigation -->
   <div class="header-center">
     <a (click)="goToDashboard()"><i class="fas fa-house"></i></a>
-    <a href="#"><i class="fas fa-users"></i></a>
-    <a href="#" (click)="toggleNotifications()">
-      <i class="fas fa-bell"></i>
-    </a>
+    <a href="#" title="Notifications" (click)="toggleNotifications($event)">
+        <i class="fas fa-bell nav-icon"></i>
+      </a>
   </div>
 
-  <!-- Right Side Profile Menu -->
   <div class="header-right">
     <img
       [src]="userProfileImage || 'assets/images/default-user.webp'"
@@ -30,27 +23,20 @@
       (click)="toggleMenu()"
       tabindex="0"
     />
-
-    <!-- Dropdown Menu -->
     <div class="menu-dropdown" *ngIf="showMenu">
-      <button (click)="goToProfile()">
-        <i class="fas fa-user"></i> Profile
-      </button>
-      <button (click)="goToSettings()">
-        <i class="fas fa-cog"></i> Settings
-      </button>
-      <button class="logout-btn" (click)="logout()">
-        <i class="fas fa-sign-out-alt"></i> Logout
-      </button>
+      <button (click)="goToProfile()"><i class="fas fa-user"></i> Profile</button>
+      <button (click)="goToSettings()"><i class="fas fa-cog"></i> Settings</button>
+      <button class="logout-btn" (click)="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
     </div>
   </div>
 </header>
 
-<!-- Profile Content -->
+<!-- Profile Page -->
 <div class="profile-wrapper">
-  <!-- Cover -->
+
+  <!-- Cover Photo -->
   <div class="cover-photo">
-    <ng-container *ngIf="coverPhoto && coverPhoto.trim() !== ''; else noCover">
+    <ng-container *ngIf="(coverPhoto || '').trim() !== ''; else noCover">
       <img [src]="coverPhoto" alt="Cover Photo" class="cover-img" />
     </ng-container>
     <ng-template #noCover>
@@ -68,7 +54,7 @@
   <!-- Profile Info -->
   <div class="profile-info">
     <div class="profile-img-wrapper">
-      <ng-container *ngIf="profileImage && profileImage.trim() !== ''; else noProfile">
+      <ng-container *ngIf="(profileImage || '').trim() !== ''; else noProfile">
         <img [src]="profileImage" alt="Profile Picture" class="profile-img" />
       </ng-container>
       <ng-template #noProfile>
@@ -89,44 +75,89 @@
 
   <!-- Tabs -->
   <div class="profile-tabs">
-    <button class="tab-btn" [class.active]="activeTab === 'posts'" (click)="switchTab('posts')">
-      Posts
-    </button>
-    <button class="tab-btn" [class.active]="activeTab === 'photos'" (click)="switchTab('photos')">
-      Photos
-    </button>
+    <button class="tab-btn" [class.active]="activeTab === 'posts'" (click)="switchTab('posts')">Posts</button>
+    <button class="tab-btn" [class.active]="activeTab === 'photos'" (click)="switchTab('photos')">Photos</button>
   </div>
 
-  <!-- Tab Content -->
+  <!-- Posts Tab -->
   <div class="tab-content" *ngIf="activeTab === 'posts'">
-    <div class="post-composer">
-      <textarea [(ngModel)]="newPostContent" placeholder="What's on your mind?" rows="3"></textarea>
-      <div class="composer-actions">
-        <input type="file" accept="image/*" hidden #postImageInput (change)="handlePostImage($event)" />
-        <button class="upload-label" (click)="postImageInput.click()">
-          <i class="fas fa-image"></i> Add Photo
-        </button>
-        <button class="submit-post-btn" (click)="submitPost()">
-          <i class="fas fa-paper-plane"></i> Post
-        </button>
+
+    <!-- Post Input -->
+    <div class="post-input">
+      <img
+        [src]="userProfileImage && userProfileImage.trim() !== '' ? userProfileImage : 'assets/user.webp'"
+        alt="Your Profile"
+        class="profile-pic"
+      />
+
+      <div class="post-content-box">
+        <div class="input-row">
+          <label class="upload-photo" title="Attach Photo">
+            <i class="fas fa-camera"></i>
+            <input type="file" accept="image/*" (change)="handlePostImage($event)" hidden />
+          </label>
+
+          <textarea
+            [(ngModel)]="newPost"
+            maxlength="280"
+            placeholder="What's on your mind? (Max 280 characters)"
+          ></textarea>
+        </div>
+
+        <div class="image-preview" *ngIf="postImagePreview">
+          <img [src]="postImagePreview" alt="Post Preview" />
+          <button class="remove-image" (click)="removePostImage()" title="Remove Image">
+            <i class="fas fa-times-circle"></i>
+          </button>
+        </div>
+
+        <button class="post-btn" (click)="submitPost()">Post</button>
       </div>
     </div>
 
+    <!-- Post List -->
     <div class="post-card" *ngFor="let post of posts">
       <div class="post-header">
         <img [src]="profileImage || 'assets/user.webp'" alt="User" class="post-profile-img" />
         <div>
           <strong>{{ fullName }}</strong>
-          <p class="timestamp">{{ post.timestamp | date:'short' }}</p>
+          <p class="timestamp">{{ post.timestamp | date: 'short' }}</p>
         </div>
       </div>
+
       <p class="post-content">{{ post.content }}</p>
+
       <img *ngIf="post.image" [src]="post.image" class="photo-img" alt="Post image" />
+
+      <!-- Post Actions (inside *ngFor) -->
+      <div class="post-actions">
+        <button (click)="toggleLike(post)">
+          <i class="fa fa-thumbs-up" [class.active]="post.userLiked"></i>
+          <span>{{ post.likes }}</span>
+        </button>
+
+        <button (click)="reactToPost(post, 'love')" [class.active]="post.userReaction === 'love'">
+          ❤️ <span>{{ post.reactions.love }}</span>
+        </button>
+
+        <button (click)="reactToPost(post, 'laugh')" [class.active]="post.userReaction === 'laugh'">
+          😂 <span>{{ post.reactions.laugh }}</span>
+        </button>
+
+        <button (click)="reactToPost(post, 'fire')" [class.active]="post.userReaction === 'fire'">
+          🔥 <span>{{ post.reactions.fire }}</span>
+        </button>
+
+        <button (click)="sharePost(post)">
+          <i class="fa fa-share"></i> <span>{{ post.sharedCount }}</span>
+        </button>
+      </div>
     </div>
 
     <p *ngIf="posts.length === 0" class="empty-state">No posts yet.</p>
   </div>
 
+  <!-- Photos Tab -->
   <div class="tab-content" *ngIf="activeTab === 'photos'">
     <label class="upload-label">
       <i class="fas fa-upload"></i> Upload Photo

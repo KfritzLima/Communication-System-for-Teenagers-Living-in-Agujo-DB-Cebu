@@ -1,138 +1,110 @@
-<!-- Include Font Awesome -->
-<link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-/>
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
 <div class="forum-wrapper">
-  <!-- Header Section -->
+  <!-- Header -->
   <header class="forum-header">
-    <!-- Logo -->
-    <div class="logo-section">
-      <img
-        src="assets/images/logo-light-transparent.png"
-        alt="Agujo Forum Logo"
-        class="logo-image"
-      />
+    <div class="header-left">
+      <img src="assets/images/logo-light-transparent.png" alt="Agujo Forum Logo" class="logo-image" />
     </div>
 
-    <!-- Navigation Icons -->
-    <nav class="nav-icons">
-      <a href="#" title="Home"><i class="fas fa-house nav-icon"></i></a>
-      <a href="#" title="Groups"><i class="fas fa-users nav-icon"></i></a>
-      <a href="#" (click)="toggleNotifications()" title="Notifications">
+    <nav class="header-center nav-icons">
+      <a href="#" title="Home" (click)="refreshPage($event)">
+        <i class="fas fa-house nav-icon"></i>
+      </a>
+      <a href="#" title="Notifications" (click)="toggleNotifications($event)">
         <i class="fas fa-bell nav-icon"></i>
       </a>
     </nav>
 
-    <!-- User Menu -->
-    <div class="menu-section">
+    <div class="header-right">
       <div class="menu-wrapper" (click)="toggleMenu()" tabindex="0">
-        <span class="menu-icon"><i class="fas fa-bars"></i></span>
+        <img [src]="userProfileImage || 'assets/images/default-user.webp'" alt="Profile" class="profile-pic" />
         <div class="menu-dropdown" *ngIf="showMenu">
-          <img
-            [src]="userProfileImage || 'assets/images/default-user.webp'"
-            class="menu-profile"
-            alt="Profile"
-          />
-          <p class="menu-name">{{ fullName }}</p>
-
-          <button (click)="goToProfile()">
-            <i class="fas fa-user"></i> Profile
-          </button>
-          <button (click)="goToSettings()">
-            <i class="fas fa-cog"></i> Settings
-          </button>
-          <button class="logout-btn" (click)="logout()">
-            <i class="fas fa-sign-out-alt"></i> Logout
-          </button>
+          <button (click)="goToProfile()"><i class="fas fa-user"></i> Profile</button>
+          <button (click)="goToSettings()"><i class="fas fa-cog"></i> Settings</button>
+          <button class="logout-btn" (click)="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- Notification Dropdown -->
+  <!-- Notifications -->
   <div class="notifications-dropdown" *ngIf="showNotifications">
     <p *ngIf="notifications.length === 0">No new notifications</p>
     <ul *ngIf="notifications.length > 0">
       <li *ngFor="let notification of notifications">
         <div class="notification-message">{{ notification.message }}</div>
-        <div class="notif-timestamp">
-          {{ notification.timestamp | date: 'short' }}
-        </div>
+        <div class="notif-timestamp">{{ notification.timestamp | date: 'short' }}</div>
       </li>
     </ul>
   </div>
 
   <!-- Welcome Message -->
-  <div class="welcome-container welcome-msg" *ngIf="welcomeVisible">
+  <div class="welcome-msg" *ngIf="welcomeVisible">
     <i class="fas fa-hand-sparkles waving-icon"></i>
     <span class="welcome-text">Welcome back, {{ fullName }}!</span>
   </div>
 
-  <!-- Post Input -->
-  <div class="post-input">
-    <img
-      [src]="userProfileImage && userProfileImage.trim() !== '' ? userProfileImage : 'assets/user.webp'"
-      alt="Your Profile"
-      class="profile-pic"
-    />
-    <div class="input-area">
-      <textarea
-        [(ngModel)]="newPost"
-        maxlength="280"
-        placeholder="What's on your mind? (Max 280 characters)"
-      ></textarea>
-      <button class="post-btn" (click)="addPost()">Post</button>
+  <!-- ✅ Wrapped & Centered Post Input -->
+  <div class="post-input-wrapper">
+    <div class="post-input" [ngClass]="{ 'with-photo': postImagePreview }">
+      <img [src]="userProfileImage || 'assets/user.webp'" alt="Profile" class="profile-pic" />
+
+      <div class="post-content-box">
+        <div class="input-row">
+          <label class="upload-photo" title="Attach Photo">
+            <i class="fas fa-camera"></i>
+            <input type="file" accept="image/*" (change)="handlePostImage($event)" />
+          </label>
+          <textarea
+            [(ngModel)]="newPost"
+            maxlength="280"
+            placeholder="What's on your mind? (Max 280 characters)"
+          ></textarea>
+        </div>
+
+        <div class="image-preview" *ngIf="postImagePreview">
+          <img [src]="postImagePreview" alt="Post Preview" />
+          <button class="remove-image" (click)="removePostImage()" title="Remove Image">
+            <i class="fas fa-times-circle"></i>
+          </button>
+        </div>
+
+        <button class="post-btn" (click)="submitPost()">Post</button>
+      </div>
     </div>
   </div>
 
-  <!-- Empty State -->
-  <p *ngIf="posts.length === 0" class="empty-state">
-    No posts yet. Be the first to share!
-  </p>
+  <!-- Post Feed -->
+  <p *ngIf="posts.length === 0" class="empty-state">No posts yet. Be the first to share!</p>
 
-  <!-- Post List -->
   <div class="post-list">
     <div class="post-card" *ngFor="let post of posts">
       <div class="post-header">
-        <img
-          [src]="post.profileImage && post.profileImage.trim() !== '' ? post.profileImage : 'assets/user.webp'"
-          alt="{{ post.author }}'s profile"
-          class="profile-pic"
-        />
+        <img [src]="post.profileImage || 'assets/user.webp'" alt="{{ post.author }}" class="profile-pic" />
         <div>
-          <h3>{{ post.author }}</h3>
-          <div class="post-timestamp">
-            {{ post.timestamp | date: 'short' }}
-          </div>
+          <strong>{{ post.author }}</strong><br />
+          <span class="timestamp">{{ post.timestamp | date: 'short' }}</span>
         </div>
       </div>
 
+      <p class="post-location" *ngIf="post.location">Location: {{ post.location }}</p>
+      <img *ngIf="post.image" [src]="post.image" class="post-image" alt="Post image" />
       <p class="post-content">{{ post.content }}</p>
 
-      <!-- Post Reactions -->
       <div class="post-actions">
         <button [class.active]="post.userLiked" (click)="toggleLike(post)">
-          <i class="fas fa-thumbs-up"></i> <span>{{ post.likes }}</span>
+          <i class="fas fa-thumbs-up"></i> {{ post.likes }}
         </button>
-        <button
-          [class.active]="post.userReaction === 'love'"
-          (click)="reactToPost(post, 'love')"
-        >
-          ❤️ <span>{{ post.reactions.love }}</span>
+        <button [class.active]="post.userReaction === 'love'" (click)="reactToPost(post, 'love')">
+          ❤️ {{ post.reactions.love }}
         </button>
-        <button
-          [class.active]="post.userReaction === 'laugh'"
-          (click)="reactToPost(post, 'laugh')"
-        >
-          😂 <span>{{ post.reactions.laugh }}</span>
+        <button [class.active]="post.userReaction === 'laugh'" (click)="reactToPost(post, 'laugh')">
+          😂 {{ post.reactions.laugh }}
         </button>
-        <button
-          [class.active]="post.userReaction === 'fire'"
-          (click)="reactToPost(post, 'fire')"
-        >
-          🔥 <span>{{ post.reactions.fire }}</span>
+        <button [class.active]="post.userReaction === 'fire'" (click)="reactToPost(post, 'fire')">
+          🔥 {{ post.reactions.fire }}
         </button>
         <button (click)="sharePost(post)">
           <i class="fas fa-share"></i>
@@ -140,17 +112,8 @@
         </button>
       </div>
 
-      <!-- Comments -->
       <div class="comment-box">
-        <label [for]="'commentInput-' + post.timestamp.getTime()">
-          Add a comment:
-        </label>
-        <input
-          [id]="'commentInput-' + post.timestamp.getTime()"
-          [(ngModel)]="post.newComment"
-          placeholder="Write a comment..."
-          class="comment-input"
-        />
+        <input [(ngModel)]="post.newComment" placeholder="Write a comment..." class="comment-input" />
         <button class="comment-btn" (click)="addComment(post)">Comment</button>
 
         <div class="comments-list" *ngIf="post.comments?.length">
