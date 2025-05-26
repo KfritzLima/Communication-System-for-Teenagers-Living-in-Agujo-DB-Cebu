@@ -21,7 +21,7 @@ export class AboutComponent {
     {
       name: 'Kfritz Lima',
       role: 'Project Lead',
-      image: 'assets/creators/Fritz1.jpg',
+      image: 'assets/creators/Fritz.jpg',
   
     },
     {
