@@ -1,0 +1,92 @@
+.about-wrapper {
+  max-width: 960px;
+  margin: 2rem auto;
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Header Match */
+.forum-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #6c35d2;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 12px 12px 0 0;
+  margin-bottom: 2rem;
+}
+
+.logo-image {
+  height: 36px;
+}
+
+.header-center a {
+  margin: 0 8px;
+  font-size: 1.25rem;
+  color: white;
+}
+
+.header-center a:hover {
+  color: #f3e8ff;
+}
+
+/* Section title */
+.section-title {
+  text-align: center;
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 2rem;
+  font-weight: bold;
+}
+
+/* Creator cards */
+.creators-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.creator-card {
+  background-color: #f3e8ff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s ease;
+}
+
+.creator-card:hover {
+  transform: translateY(-4px);
+}
+
+.creator-img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1rem;
+  border: 3px solid #6c35d2;
+}
+
+.creator-name {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-bottom: 0.2rem;
+}
+
+.creator-role {
+  color: #555;
+  margin-bottom: 0.6rem;
+}
+
+.creator-quote {
+  font-style: italic;
+  color: #444;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  border-left: 4px solid #6c35d2;
+  padding-left: 10px;
+}

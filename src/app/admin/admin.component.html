@@ -1,0 +1,33 @@
+<div class="admin-wrapper">
+  <header class="admin-header">
+    <h2>Admin Panel</h2>
+    <div>
+      <button (click)="goToDashboard()">🏠 Dashboard</button>
+      <button class="logout" (click)="logout()">🚪 Logout</button>
+    </div>
+  </header>
+
+  <section class="moderation-section" *ngIf="posts.length > 0; else noPosts">
+    <h3>Pending Posts for Approval</h3>
+    <div class="post-card" *ngFor="let post of posts">
+      <div class="post-header">
+        <img [src]="post.profileImage || 'assets/user.webp'" class="profile-img" />
+        <div>
+          <strong>{{ post.author }}</strong><br />
+          <span class="timestamp">{{ post.timestamp | date: 'short' }}</span>
+        </div>
+      </div>
+      <p class="post-content">{{ post.content }}</p>
+      <img *ngIf="post.image" [src]="post.image" class="post-image" />
+
+      <div class="actions">
+        <button class="approve" (click)="approve(post)">✅ Approve</button>
+        <button class="reject" (click)="reject(post)">❌ Reject</button>
+      </div>
+    </div>
+  </section>
+
+  <ng-template #noPosts>
+    <p class="empty">No posts awaiting approval.</p>
+  </ng-template>
+</div>

@@ -1,20 +1,23 @@
 <div class="container">
   <form (ngSubmit)="onSubmit()">
+    <!-- Forum Title -->
     <div class="greeting">
       AGUJO <span class="purple-text">FORUM</span>
     </div>
 
+    <!-- Username or Email Field -->
     <div class="custom-input-group">
-      <i class="icon fas fa-envelope"></i>
+      <i class="icon fas fa-user"></i>
       <input 
-        type="email" 
-        placeholder="Email" 
-        [(ngModel)]="email" 
-        name="email" 
+        type="text" 
+        placeholder="Username or Email" 
+        [(ngModel)]="identifier" 
+        name="identifier" 
         required
       />
     </div>
 
+    <!-- Password Field -->
     <div class="custom-input-group">
       <i class="icon fas fa-lock"></i>
       <input 
@@ -26,7 +29,10 @@
       />
     </div>
 
+    <!-- Login Button -->
     <button class="login-btn" type="submit">Login</button>
+
+    <!-- Create Account Button -->
     <button class="create-btn" routerLink="/create-account" type="button">Create Account</button>
   </form>
 </div>

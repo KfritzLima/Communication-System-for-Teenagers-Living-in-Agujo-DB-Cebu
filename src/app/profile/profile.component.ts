@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
+
 interface Notification {
   message: string;
   timestamp: Date;
@@ -138,8 +139,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.router.navigate(['/profile']);
   }
 
-  goToSettings(): void {
-    this.router.navigate(['/settings']);
+  goToAbout(): void {
+    this.router.navigate(['/about']);
   }
 
   logout(): void {
@@ -273,6 +274,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.savePosts();
     alert('Post shared!');
   }
+  goToSettings(): void {
+    this.router.navigate(['/settings']);
+  }
+
 
   togglePostMenu(post: Post): void {
     this.posts.forEach(p => {

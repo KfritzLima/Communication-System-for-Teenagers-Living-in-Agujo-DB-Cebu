@@ -69,7 +69,7 @@ export class DashboardComponent implements OnInit {
     private notificationService: NotificationService
   ) {}
 
-  ngOnInit(): void {
+  ngOnInit(): void {  
     const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
     if (!isLoggedIn) {
       this.router.navigate(['/login']);
@@ -284,8 +284,8 @@ export class DashboardComponent implements OnInit {
     this.router.navigate(['/profile']);
   }
 
-  goToSettings(): void {
-    this.router.navigate(['/settings']);
+  goToAbout(): void {
+    this.router.navigate(['/about']);
   }
 
   logout(): void {

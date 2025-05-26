@@ -1,3 +1,4 @@
+/* General Reset */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -6,121 +7,135 @@
 
 body, html {
   height: 100%;
-  margin: 0;
   font-family: 'Poppins', sans-serif;
-  overflow: auto;
+  background: #1e1e2f;
+  overflow: hidden;
 }
 
+/* Login Container */
 .container {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: #344256;
+  background: linear-gradient(to bottom right, #6c35d2, #344256);
   padding: 1rem;
 }
 
+/* Login Form */
 form {
-  background: rgba(118, 75, 162, 0.4);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px;
-  padding: 40px 30px;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  padding: 2.5rem 2rem;
+  backdrop-filter: blur(14px);
   width: 100%;
   max-width: 400px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
   text-align: center;
 }
 
+/* Title */
 .greeting {
-  font-size: 28px;
+  font-size: 2rem;
   font-weight: bold;
   color: #fff;
-  margin-bottom: 30px;
+  margin-bottom: 2rem;
+  letter-spacing: 1px;
 }
 
 .purple-text {
-  color: #c9a0ff;
+  color: #caaaff;
 }
 
+/* Input Group */
 .custom-input-group {
   position: relative;
-  margin-bottom: 20px;
+  margin-bottom: 1.5rem;
 }
 
 .custom-input-group input {
   width: 100%;
   height: 50px;
-  padding: 0 12px 0 50px;
+  padding: 0 1rem 0 3rem;
   border: none;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.12);
   color: #fff;
-  font-size: 18px;
-  outline: none;
+  font-size: 1rem;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
 .custom-input-group input::placeholder {
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.6);
 }
 
+.custom-input-group input:focus {
+  background: rgba(255, 255, 255, 0.18);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(108, 53, 210, 0.5);
+}
+
+/* Icons */
 .icon {
   position: absolute;
   top: 50%;
   left: 15px;
   transform: translateY(-50%);
-  font-size: 24px;
+  font-size: 1.2rem;
   color: rgba(255, 255, 255, 0.8);
 }
 
+/* Buttons */
 .login-btn, .create-btn {
   width: 100%;
   padding: 14px;
-  margin-top: 20px;
+  margin-top: 1rem;
   border-radius: 8px;
-  color: #fff;
-  font-weight: bold;
-  text-transform: uppercase;
-  font-size: 16px;
+  font-weight: 600;
+  font-size: 0.95rem;
   cursor: pointer;
+  letter-spacing: 0.5px;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 .login-btn {
-  background: #344256;
+  background: #6c35d2;
   border: none;
-  transition: 0.3s ease;
+  color: #fff;
+}
+
+.login-btn:hover {
+  background: #582aad;
 }
 
 .create-btn {
   background: transparent;
   border: 2px solid #fff;
-  transition: 0.3s ease;
-}
-
-.login-btn:hover {
-  background: linear-gradient(90deg, #5a67d8, #6b46c1);
+  color: #fff;
 }
 
 .create-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  color: #eee;
 }
 
-/* Mobile */
+/* Mobile Responsive */
 @media (max-width: 480px) {
-  .greeting {
-    font-size: 22px;
+  form {
+    padding: 2rem 1.5rem;
   }
 
-  form {
-    padding: 30px 20px;
+  .greeting {
+    font-size: 1.5rem;
   }
 
   .custom-input-group input {
-    padding-left: 40px;
-    font-size: 16px;
+    padding-left: 2.8rem;
   }
 
   .login-btn, .create-btn {
-    font-size: 14px;
+    font-size: 0.85rem;
     padding: 12px;
   }
 }

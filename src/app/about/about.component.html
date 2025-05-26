@@ -1,0 +1,20 @@
+<div class="about-wrapper">
+  <header class="forum-header">
+    <img src="assets/images/logo-light-transparent.png" alt="Logo" class="logo-image" />
+
+    <div class="header-center">
+      <a (click)="goToDashboard()" title="Go to Dashboard"><i class="fas fa-home"></i></a>
+      <a (click)="goToProfile()" title="Go to Profile"><i class="fas fa-user-circle"></i></a>
+    </div>
+  </header>
+
+  <h1 class="section-title">About the Creators</h1>
+
+  <div class="creators-container">
+    <div class="creator-card" *ngFor="let creator of creators">
+      <img [src]="creator.image" [alt]="creator.name" class="creator-img" />
+      <h3 class="creator-name">{{ creator.name }}</h3>
+      <p class="creator-role">{{ creator.role }}</p>
+    </div>
+  </div>
+</div>

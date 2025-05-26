@@ -23,7 +23,7 @@
         <img [src]="userProfileImage || 'assets/images/default-user.webp'" alt="Profile" class="profile-pic" />
         <div class="menu-dropdown" *ngIf="showMenu">
           <button (click)="goToProfile()"><i class="fas fa-user"></i> Profile</button>
-          <button (click)="goToSettings()"><i class="fas fa-cog"></i> Settings</button>
+          <button (click)="goToAbout()"><i class="fas fa-info-circle"></i> About</button>
           <button class="logout-btn" (click)="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
         </div>
       </div>
@@ -88,8 +88,8 @@
           <span class="timestamp">{{ post.timestamp | date: 'short' }}</span>
         </div>
 
-        <!-- 3-dot delete menu for current user only -->
-        <div *ngIf="post.author === fullName" class="post-menu-wrapper">
+        <!-- 3-dot delete menu -->
+        <div class="post-menu-wrapper" *ngIf="post.author === fullName || fullName === 'Admin'">
           <button class="post-menu-btn" (click)="togglePostMenu(post)">
             <i class="fas fa-ellipsis-v"></i>
           </button>
@@ -144,25 +144,33 @@
   </div>
 
   <!-- Share Modal -->
-  <div class="share-modal" *ngIf="shareModalVisible && selectedPost">
-    <div class="modal-content">
-      <button class="close-btn" (click)="closeShareModal()">&times;</button>
-      <h3>Share Post</h3>
+  <div class="share-overlay" *ngIf="shareModalVisible && selectedPost">
+    <div class="share-card">
+      <button class="close-btn" (click)="closeShareModal()">×</button>
 
-      <div class="shared-post" *ngIf="selectedPost.sharedFrom">
-        <small>Shared from <strong>{{ selectedPost.sharedFrom.author }}</strong>:</small>
-        <p>{{ selectedPost.sharedFrom.content }}</p>
-        <img *ngIf="selectedPost.sharedFrom.image" [src]="selectedPost.sharedFrom.image" class="shared-image" />
+      <h3 class="modal-title">Share Post</h3>
+
+      <div class="shared-preview">
+        <small>
+          {{ selectedPost.sharedFrom ? 'Shared from' : 'Original Post by' }}
+          <strong>{{ selectedPost.sharedFrom?.author || selectedPost.author }}</strong>:
+        </small>
+        <p>{{ selectedPost.sharedFrom?.content || selectedPost.content }}</p>
+        <img
+          *ngIf="selectedPost.sharedFrom?.image || selectedPost.image"
+          [src]="selectedPost.sharedFrom?.image || selectedPost.image"
+          class="shared-image"
+          alt="Shared content"
+        />
       </div>
 
-      <div class="shared-post" *ngIf="!selectedPost.sharedFrom">
-        <small>Original Post by <strong>{{ selectedPost.author }}</strong>:</small>
-        <p>{{ selectedPost.content }}</p>
-        <img *ngIf="selectedPost.image" [src]="selectedPost.image" class="shared-image" />
-      </div>
+      <textarea
+        [(ngModel)]="shareComment"
+        placeholder="Say something about this..."
+        class="share-textarea"
+      ></textarea>
 
-      <textarea [(ngModel)]="shareComment" placeholder="Say something about this..."></textarea>
-      <button class="post-btn" (click)="shareNow()">Share Now</button>
+      <button class="share-now-btn" (click)="shareNow()">Share Now</button>
     </div>
   </div>
 </div>

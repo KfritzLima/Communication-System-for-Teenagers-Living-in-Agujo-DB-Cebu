@@ -16,8 +16,10 @@ body, html {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: #344256; /* Solid background */
+  background: linear-gradient(to bottom right, #6c35d2, #344256); /* Updated background */
+  padding: 1rem;
 }
+
 
 
 form {

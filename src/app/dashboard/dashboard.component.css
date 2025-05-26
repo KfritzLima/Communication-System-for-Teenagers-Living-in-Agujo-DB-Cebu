@@ -572,3 +572,117 @@ textarea:focus {
   user-select: none;
 }
 
+/* Share Modal Overlay */
+.share-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(6px);
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Modal Container */
+.share-card {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  padding: 30px 24px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  animation: slideUpFade 0.3s ease-out;
+  color: #fff;
+}
+
+/* Modal Title */
+.modal-title {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+/* Close Button */
+.share-card .close-btn {
+  position: absolute;
+  top: 15px;
+  right: 18px;
+  font-size: 24px;
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  transition: color 0.2s ease-in-out;
+}
+
+.share-card .close-btn:hover {
+  color: #ff6b6b;
+}
+
+/* Shared Post Preview */
+.shared-preview {
+  background: rgba(255, 255, 255, 0.1);
+  border-left: 4px solid #b185f6;
+  padding: 15px 20px;
+  border-radius: 12px;
+  margin-bottom: 18px;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.shared-preview img.shared-image {
+  width: 100%;
+  max-height: 250px;
+  object-fit: cover;
+  margin-top: 10px;
+  border-radius: 10px;
+}
+
+/* Share Textarea */
+.share-textarea {
+  width: 100%;
+  height: 80px;
+  resize: none;
+  border-radius: 10px;
+  border: none;
+  padding: 12px 14px;
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  outline: none;
+  margin-bottom: 20px;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Share Button */
+.share-now-btn {
+  width: 100%;
+  background: linear-gradient(to right, #8e2de2, #4a00e0);
+  padding: 12px;
+  font-weight: bold;
+  color: #fff;
+  font-size: 16px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.share-now-btn:hover {
+  background: linear-gradient(to right, #5f1dbb, #3500a5);
+}
+
+/* Entry Animation */
+@keyframes slideUpFade {
+  0% { opacity: 0; transform: translateY(40px); }
+  100% { opacity: 1; transform: translateY(0); }
+}

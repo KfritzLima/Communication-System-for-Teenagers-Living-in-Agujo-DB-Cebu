@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';        // Must import CommonModule
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
@@ -9,10 +9,10 @@ import { UserService } from '../user/user.service';
   selector: 'app-create-account',
   standalone: true,
   imports: [
-    CommonModule,       // <-- MUST be here for *ngIf
+    CommonModule,
     FormsModule,
     RouterModule,
-    MatSnackBarModule,
+    MatSnackBarModule
   ],
   templateUrl: './create-account.component.html',
   styleUrls: ['./create-account.component.css'],
@@ -35,16 +35,18 @@ export class CreateAccountComponent {
       return;
     }
 
+    // ✅ Store in your custom user service (if needed)
     this.userService.setUser({
       fullName: this.fullName,
       username: this.username,
       email: this.email,
     });
 
-    localStorage.setItem('userFullName', this.fullName);
-    localStorage.setItem('userUsername', this.username);
-    localStorage.setItem('userEmail', this.email);
-    localStorage.setItem('userPassword', this.password);
+    // ✅ Store user data to localStorage
+    localStorage.setItem('userFullName', this.fullName.trim());
+    localStorage.setItem('userUsername', this.username.trim());
+    localStorage.setItem('userEmail', this.email.trim());
+    localStorage.setItem('userPassword', this.password.trim());
 
     this.snackBar.open('Account created successfully!', 'Close', { duration: 2000 });
 
